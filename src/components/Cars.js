@@ -9,7 +9,6 @@ export default function CarInfo() {
   const [make, setMake] = useState('');
   const [models, setModels] = useState([]);
   const [recallData, setRecallData] = useState(null);
-  const hi = "hi"
   const years = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]; // Example years
   const makes = ['Acura', 'BMW', 'Toyota']; // Example makes
 
