@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 export default function Appbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: 'red' }}> 
         <Toolbar>
           <IconButton
             size="large"
@@ -20,13 +20,13 @@ export default function Appbar() {
           >
             <MenuIcon />
           </IconButton>
+          
+          <img src="/TheHartfordIcon.png" alt="logo" style={{ marginRight: '20px', height: '50px' }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             The Hartford
           </Typography>
-         
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
-
