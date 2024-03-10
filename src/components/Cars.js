@@ -32,7 +32,7 @@ export default function CarInfo() {
 
     const fetchRecallData = async () => {
         try {
-            const endpoint = 'https://mnnsrewy70.execute-api.us-east-1.amazonaws.com/prod/data';
+            const endpoint = process.env.NEXT_PUBLIC_RECALL_API_ENDPOINT;
             const response = await axios.get(`${endpoint}?year=${year}&make=${make}&model=${model}`);
             setRecallData(response.data);
             setErrorMessage('');
@@ -44,7 +44,7 @@ export default function CarInfo() {
 
     const fetchRatingData = async () => {
         try {
-            const endpoint = 'https://e38yhzs60l.execute-api.us-east-1.amazonaws.com/ratingTest/data';
+            const endpoint = process.env.NEXT_PUBLIC_RATING_API_ENDPOINT;
             const response = await axios.get(`${endpoint}?year=${year}&make=${make}&model=${model}`);
             setRatingData(response.data);
             setErrorMessage('');
