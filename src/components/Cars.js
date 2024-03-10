@@ -32,8 +32,7 @@ export default function CarInfo() {
 
     const fetchRecallData = async () => {
         try {
-            const endpoint = process.env.NEXT_PUBLIC_RECALL_API_ENDPOINT;
-            const response = await axios.get(`${endpoint}?year=${year}&make=${make}&model=${model}`);
+            const response = await axios.get(`/api/recall?year=${year}&make=${make}&model=${model}`);
             setRecallData(response.data);
             setErrorMessage('');
             setHasFetchedRecall(true);
@@ -44,8 +43,7 @@ export default function CarInfo() {
 
     const fetchRatingData = async () => {
         try {
-            const endpoint = process.env.NEXT_PUBLIC_RATING_API_ENDPOINT;
-            const response = await axios.get(`${endpoint}?year=${year}&make=${make}&model=${model}`);
+            const response = await axios.get(`/api/rating?year=${year}&make=${make}&model=${model}`);
             setRatingData(response.data);
             setErrorMessage('');
             setHasFetchedRating(true);
