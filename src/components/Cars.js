@@ -42,10 +42,8 @@ export default function CarInfo() {
 
   const fetchData = async () => {
     try {
-      const endpoint =
-        "https://mnnsrewy70.execute-api.us-east-1.amazonaws.com/prod/data";
       const response = await axios.get(
-        `${endpoint}?year=${year}&make=${make}&model=${model}`
+        `/api/fetchData?year=${year}&make=${make}&model=${model}`
       );
       setData({
         recalls: response.data.recalls,
