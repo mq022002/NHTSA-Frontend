@@ -4,7 +4,7 @@ import Cars from '../../components/Cars';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-white h-screen">
       <Appbar />
       <Cars />
       
