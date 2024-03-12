@@ -62,14 +62,14 @@ export default function CarInfo() {
   };
 
   const RecallInfoBox = ({ recallItem }) => (
-    <Box border={1} borderRadius={5} p={2} my={2}>
-      <Typography variant="h6">Component: {recallItem.Component}</Typography>
-      <Typography variant="body1">Summary: {recallItem.Summary}</Typography>
-      <Typography variant="body2">
-        Consequence: {recallItem.Consequence}
-      </Typography>
-      <Typography variant="body2">Remedy: {recallItem.Remedy}</Typography>
-    </Box>
+    <div className="border border-gray-300 rounded p-4 my-2">
+      <h2 className="text-lg font-semibold">
+        Component: {recallItem.Component}
+      </h2>
+      <p className="text-base">Summary: {recallItem.Summary}</p>
+      <p className="text-sm">Consequence: {recallItem.Consequence}</p>
+      <p className="text-sm">Remedy: {recallItem.Remedy}</p>
+    </div>
   );
 
   const RatingInfoBox = ({ ratingItem }) => (
