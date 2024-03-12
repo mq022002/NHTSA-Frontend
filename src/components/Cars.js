@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import {
-  Container,
-  Paper,
-  Button,
-  Select,
-  MenuItem,
-  Box,
-  Typography,
   Tabs,
   Tab,
 } from "@mui/material";
