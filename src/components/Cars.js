@@ -104,7 +104,7 @@ export default function CarInfo() {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black"
         style={{ padding: "50px 20px", width: "auto", margin: "20px auto" }}
       >
-        <h2 className="text-red-500 text-lg font-bold mb-5">
+        <h2 className="text-[#832C31] text-lg font-bold mb-5">
           Get Vehicle Information
         </h2>
 
@@ -154,13 +154,13 @@ export default function CarInfo() {
 
         <button
           onClick={fetchData}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 block w-full"
+          className="bg-[#832C31] hover:bg-[#42191b] text-white font-bold py-2 px-4 rounded mt-5 block w-full"
         >
           Fetch Data
         </button>
 
         {errorMessage && (
-          <p className="text-red-500 text-center mt-5">{errorMessage}</p>
+          <p className="text-[#832C31] text-center mt-5">{errorMessage}</p>
         )}
 
         {hasFetchedData && (
