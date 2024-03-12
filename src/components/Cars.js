@@ -73,33 +73,29 @@ export default function CarInfo() {
   );
 
   const RatingInfoBox = ({ ratingItem }) => (
-    <Box border={1} borderRadius={5} p={2} my={2}>
-      <Typography variant="h6">
+    <div className="border border-gray-300 rounded p-4 my-2">
+      <h2 className="text-lg font-semibold">
         Vehicle: {ratingItem.VehicleDescription}
-      </Typography>
-      <Typography variant="body1">
-        Overall Rating: {ratingItem.OverallRating}
-      </Typography>
-      <Typography variant="body2">
+      </h2>
+      <p className="text-base">Overall Rating: {ratingItem.OverallRating}</p>
+      <p className="text-sm">
         Front Crash Rating: {ratingItem.OverallFrontCrashRating}
-      </Typography>
-      <Typography variant="body2">
+      </p>
+      <p className="text-sm">
         Side Crash Rating: {ratingItem.OverallSideCrashRating}
-      </Typography>
-      <Typography variant="body2">
-        Rollover Rating: {ratingItem.RolloverRating}
-      </Typography>
-      <Typography variant="body2">
+      </p>
+      <p className="text-sm">Rollover Rating: {ratingItem.RolloverRating}</p>
+      <p className="text-sm">
         Electronic Stability Control:{" "}
         {ratingItem.NHTSAElectronicStabilityControl}
-      </Typography>
-      <Typography variant="body2">
+      </p>
+      <p className="text-sm">
         Forward Collision Warning: {ratingItem.NHTSAForwardCollisionWarning}
-      </Typography>
-      <Typography variant="body2">
+      </p>
+      <p className="text-sm">
         Lane Departure Warning: {ratingItem.NHTSALaneDepartureWarning}
-      </Typography>
-    </Box>
+      </p>
+    </div>
   );
 
   return (
