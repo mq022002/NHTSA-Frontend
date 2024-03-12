@@ -104,9 +104,9 @@ export default function CarInfo() {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black"
         style={{ padding: "50px 20px", width: "auto", margin: "20px auto" }}
       >
-        <Typography variant="h6" style={{ color: "red", marginBottom: "20px" }}>
+        <h2 className="text-red-500 text-lg font-bold mb-5">
           Get Vehicle Information
-        </Typography>
+        </h2>
 
         <select
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -152,21 +152,15 @@ export default function CarInfo() {
           ))}
         </select>
 
-        <Button
-          variant="contained"
+        <button
           onClick={fetchData}
-          style={{ marginTop: "20px", display: "block", width: "100%" }}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 block w-full"
         >
           Fetch Data
-        </Button>
+        </button>
 
         {errorMessage && (
-          <Typography
-            color="error"
-            style={{ marginTop: "20px", textAlign: "center" }}
-          >
-            {errorMessage}
-          </Typography>
+          <p className="text-red-500 text-center mt-5">{errorMessage}</p>
         )}
 
         {hasFetchedData && (
