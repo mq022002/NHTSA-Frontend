@@ -99,9 +99,9 @@ export default function CarInfo() {
   );
 
   return (
-    <Container>
-      <Paper
-        elevation={3}
+    <div className="container mx-auto p-5">
+      <div
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black"
         style={{ padding: "50px 20px", width: "auto", margin: "20px auto" }}
       >
         <Typography variant="h6" style={{ color: "red", marginBottom: "20px" }}>
@@ -122,7 +122,6 @@ export default function CarInfo() {
             </option>
           ))}
         </select>
-
         <select
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={make}
@@ -137,7 +136,6 @@ export default function CarInfo() {
             </option>
           ))}
         </select>
-
         <select
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={model}
@@ -172,20 +170,14 @@ export default function CarInfo() {
         )}
 
         {hasFetchedData && (
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            mt={2}
-          >
-            <Box width="50%" pr={2}>
-              <Typography variant="h6">Rating Information</Typography>
+          <div className="flex justify-between mt-2">
+            <div className="w-1/2 pr-2">
+              <h2 className="text-lg font-semibold">Rating Information</h2>
               {data.ratings.map((ratingItem, index) => (
                 <RatingInfoBox key={index} ratingItem={ratingItem} />
               ))}
-            </Box>
-
-            <Box width="50%" pl={2}>
+            </div>
+            <div className="w-1/2 pl-2">
               {data.recalls.length > 0 ? (
                 <>
                   <Tabs
@@ -193,34 +185,30 @@ export default function CarInfo() {
                     onChange={handleRecallTabChange}
                     orientation="vertical"
                     variant="scrollable"
-                    style={{ overflow: "auto" }}
+                    className="overflow-auto"
                   >
                     {data.recalls.map((recall, index) => (
                       <Tab
                         key={index}
-                        label={
-                          <Typography style={{ fontSize: "12px" }}>
-                            {recall.Component}
-                          </Typography>
-                        }
+                        label={<p className="text-xs">{recall.Component}</p>}
                       />
                     ))}
                   </Tabs>
-                  <Box sx={{ pt: 3 }}>
-                    <Typography variant="h6">
+                  <div className="pt-3">
+                    <h2 className="text-lg font-semibold">
                       Recall Details for{" "}
                       {data.recalls[activeRecallTab].Component}
-                    </Typography>
+                    </h2>
                     <RecallInfoBox recallItem={data.recalls[activeRecallTab]} />
-                  </Box>
+                  </div>
                 </>
               ) : (
-                <Typography>No recall information available.</Typography>
+                <p>No recall information available.</p>
               )}
-            </Box>
-          </Box>
+            </div>
+          </div>
         )}
-      </Paper>
-    </Container>
+      </div>
+    </div>
   );
 }
