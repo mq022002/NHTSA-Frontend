@@ -45,6 +45,8 @@ export default function CarInfo() {
       const response = await axios.get(
         `/api/fetchData?year=${year}&make=${make}&model=${model}`
       );
+      // This is for debugging after migrating to the shared instance.
+      console.log(response.data);
       setData({
         recalls: response.data.recalls,
         ratings: response.data.ratings,
