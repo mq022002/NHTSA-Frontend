@@ -108,49 +108,51 @@ export default function CarInfo() {
           Get Vehicle Information
         </Typography>
 
-        <Select
+        <select
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={year}
           onChange={(e) => setYear(e.target.value)}
-          displayEmpty
-          fullWidth
         >
-          <MenuItem value="" disabled>
+          <option value="" disabled>
             Select Year
-          </MenuItem>
+          </option>
           {years.map((y) => (
-            <MenuItem key={y} value={y}>
+            <option key={y} value={y}>
               {y}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
+        </select>
 
-        <Select value={make} onChange={handleMakeChange} displayEmpty fullWidth>
-          <MenuItem value="" disabled>
+        <select
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          value={make}
+          onChange={handleMakeChange}
+        >
+          <option value="" disabled>
             Select Make
-          </MenuItem>
+          </option>
           {makes.map((m) => (
-            <MenuItem key={m} value={m}>
+            <option key={m} value={m}>
               {m}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
+        </select>
 
-        <Select
+        <select
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={model}
           onChange={(e) => setModel(e.target.value)}
-          displayEmpty
-          fullWidth
           disabled={!models.length}
         >
-          <MenuItem value="" disabled>
+          <option value="" disabled>
             Select Model
-          </MenuItem>
+          </option>
           {models.map((m) => (
-            <MenuItem key={m} value={m}>
+            <option key={m} value={m}>
               {m}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
+        </select>
 
         <Button
           variant="contained"
