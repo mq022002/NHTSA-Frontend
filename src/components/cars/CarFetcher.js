@@ -5,7 +5,7 @@ import CarForm from "./CarForm";
 import CarRatings from "./CarRatings";
 import CarRecalls from "./CarRecalls";
 
-export default function CarInfo() {
+export default function CarFetcher() {
   const [data, setData] = useState({ recalls: [], ratings: [] });
   const [errorMessage, setErrorMessage] = useState("");
   const [hasFetchedData, setHasFetchedData] = useState(false);
