@@ -3,6 +3,7 @@ import axios from "axios";
 import { Tabs, Tab } from "@mui/material";
 import CarForm from "./CarForm";
 import CarRatings from "./CarRatings";
+import CarRecalls from "./CarRecalls";
 
 export default function CarInfo() {
   const [data, setData] = useState({ recalls: [], ratings: [] });
@@ -31,17 +32,6 @@ export default function CarInfo() {
     setActiveRecallTab(newValue);
   };
 
-  const RecallInfoBox = ({ recallItem }) => (
-    <div className="border border-gray-300 rounded p-4 my-2">
-      <h2 className="text-lg font-semibold">
-        Component: {recallItem.Component}
-      </h2>
-      <p className="text-base">Summary: {recallItem.Summary}</p>
-      <p className="text-sm">Consequence: {recallItem.Consequence}</p>
-      <p className="text-sm">Remedy: {recallItem.Remedy}</p>
-    </div>
-  );
-
   return (
     <div className="container mx-auto p-5">
       <div
@@ -62,33 +52,12 @@ export default function CarInfo() {
           <div className="flex justify-between mt-2">
             <CarRatings ratings={data.ratings} />
             <div className="w-1/2 pl-2">
-              {data.recalls.length > 0 ? (
-                <>
-                  <Tabs
-                    value={activeRecallTab}
-                    onChange={handleRecallTabChange}
-                    orientation="vertical"
-                    variant="scrollable"
-                    className="overflow-auto"
-                  >
-                    {data.recalls.map((recall, index) => (
-                      <Tab
-                        key={index}
-                        label={<p className="text-xs">{recall.Component}</p>}
-                      />
-                    ))}
-                  </Tabs>
-                  <div className="pt-3">
-                    <h2 className="text-lg font-semibold">
-                      Recall Details for{" "}
-                      {data.recalls[activeRecallTab].Component}
-                    </h2>
-                    <RecallInfoBox recallItem={data.recalls[activeRecallTab]} />
-                  </div>
-                </>
-              ) : (
-                <p>No recall information available.</p>
-              )}
+              <CarRecalls
+                recalls={data.recalls}
+                activeRecallTab={activeRecallTab}
+                handleRecallTabChange={handleRecallTabChange}
+              />{" "}
+              {/* use the CarRecalls component here */}
             </div>
           </div>
         )}
