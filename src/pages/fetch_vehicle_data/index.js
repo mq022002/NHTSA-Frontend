@@ -1,6 +1,6 @@
 import React from 'react';
-import Appbar from '../../components/Appbar';
-import Cars from '../../components/Cars';
+import Appbar from '../../components//layout/Appbar';
+import Cars from '../../components/cars/Cars';
 
 function App() {
   return (
