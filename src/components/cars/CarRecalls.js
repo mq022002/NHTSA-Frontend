@@ -1,3 +1,5 @@
+import { Tabs, Tab } from "@mui/material";
+
 const RecallInfoBox = ({ recallItem }) => (
   <div className="border border-gray-300 rounded p-4 my-2">
     <h2 className="text-lg font-semibold">Component: {recallItem.Component}</h2>
@@ -7,7 +9,7 @@ const RecallInfoBox = ({ recallItem }) => (
   </div>
 );
 
-const CarRecalls = ({ recalls }) => (
+const CarRecalls = ({ recalls, activeRecallTab, handleRecallTabChange }) => (
   <div className="w-1/2 pl-2">
     {recalls.length > 0 ? (
       <>

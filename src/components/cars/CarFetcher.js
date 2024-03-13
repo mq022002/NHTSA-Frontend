@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Tabs, Tab } from "@mui/material";
 import CarForm from "./CarForm";
 import CarRatings from "./CarRatings";
 import CarRecalls from "./CarRecalls";
