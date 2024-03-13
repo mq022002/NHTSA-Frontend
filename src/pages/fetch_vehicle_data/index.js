@@ -1,5 +1,5 @@
 import React from 'react';
-import Appbar from '../../components//layout/Appbar';
+import Appbar from '../../components/layout/Navigation';
 import Cars from '../../components/cars/Cars';
 
 function App() {
