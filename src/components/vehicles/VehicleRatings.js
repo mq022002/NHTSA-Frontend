@@ -23,7 +23,7 @@ const RatingInfoBox = ({ ratingItem }) => (
   </div>
 );
 
-const CarRatings = ({ ratings }) => (
+const VehicleRatings = ({ ratings }) => (
   <div className="w-1/2 pr-2">
     <h2 className="text-lg font-semibold">Rating Information</h2>
     {ratings.map((ratingItem, index) => (
@@ -32,4 +32,4 @@ const CarRatings = ({ ratings }) => (
   </div>
 );
 
-export default CarRatings;
+export default VehicleRatings;

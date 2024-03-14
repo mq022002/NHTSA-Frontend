@@ -9,7 +9,7 @@ const RecallInfoBox = ({ recallItem }) => (
   </div>
 );
 
-const CarRecalls = ({ recalls, activeRecallTab, handleRecallTabChange }) => (
+const VehicleRecalls = ({ recalls, activeRecallTab, handleRecallTabChange }) => (
   <div className="w-1/2 pl-2">
     {recalls.length > 0 ? (
       <>
@@ -40,4 +40,4 @@ const CarRecalls = ({ recalls, activeRecallTab, handleRecallTabChange }) => (
   </div>
 );
 
-export default CarRecalls;
+export default VehicleRecalls;

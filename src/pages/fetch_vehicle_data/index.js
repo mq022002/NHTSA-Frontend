@@ -1,15 +1,13 @@
-import React from 'react';
-import Navigation from '../../components/layout/Navigation';
-import CarFetcher from '../../components/cars/CarFetcher';
+import React from "react";
+import BaseLayout from "../../components/layouts/BaseLayout";
+import VehicleFetcher from "../../components/vehicles/VehicleFetcher";
 
-function App() {
+function FetchVehicleData() {
   return (
-    <div className="bg-white min-h-screen">
-      <Navigation />
-      <CarFetcher />
-      
-    </div>
+    <BaseLayout>
+      <VehicleFetcher />
+    </BaseLayout>
   );
 }
 
-export default App;
+export default FetchVehicleData;

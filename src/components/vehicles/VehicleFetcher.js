@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import CarForm from "./CarForm";
-import CarRatings from "./CarRatings";
-import CarRecalls from "./CarRecalls";
+import VehicleForm from "./VehicleForm";
+import VehicleRatings from "./VehicleRatings";
+import VehicleRecalls from "./VehicleRecalls";
 
-export default function CarFetcher() {
+export default function VehicleFetcher() {
   const [data, setData] = useState({ recalls: [], ratings: [] });
   const [errorMessage, setErrorMessage] = useState("");
   const [hasFetchedData, setHasFetchedData] = useState(false);
@@ -41,7 +41,7 @@ export default function CarFetcher() {
           Get Vehicle Information
         </h2>
 
-        <CarForm fetchData={fetchData} />
+        <VehicleForm fetchData={fetchData} />
 
         {errorMessage && (
           <p className="text-[#832C31] text-center mt-5">{errorMessage}</p>
@@ -49,15 +49,12 @@ export default function CarFetcher() {
 
         {hasFetchedData && (
           <div className="flex justify-between mt-2">
-            <CarRatings ratings={data.ratings} />
-            <div className="w-1/2 pl-2">
-              <CarRecalls
-                recalls={data.recalls}
-                activeRecallTab={activeRecallTab}
-                handleRecallTabChange={handleRecallTabChange}
-              />{" "}
-              {/* use the CarRecalls component here */}
-            </div>
+            <VehicleRatings ratings={data.ratings} />
+            <VehicleRecalls
+              recalls={data.recalls}
+              activeRecallTab={activeRecallTab}
+              handleRecallTabChange={handleRecallTabChange}
+            />
           </div>
         )}
       </div>
