@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { YEARS, MAKES, MAKE_MODEL_MAPPING } from "../../constants/constants";
 import SelectInput from "../ui/SelectInput";
 
-export default function CarForm({ fetchData }) {
+export default function VehicleForm({ fetchData }) {
   const [year, setYear] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");

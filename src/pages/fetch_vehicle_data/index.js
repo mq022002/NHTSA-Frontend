@@ -1,11 +1,11 @@
 import React from "react";
 import BaseLayout from "../../components/layouts/BaseLayout";
-import CarFetcher from "../../components/cars/CarFetcher";
+import VehicleFetcher from "../../components/vehicles/VehicleFetcher";
 
 function FetchVehicleData() {
   return (
     <BaseLayout>
-      <CarFetcher />
+      <VehicleFetcher />
     </BaseLayout>
   );
 }
