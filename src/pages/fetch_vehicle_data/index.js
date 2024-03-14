@@ -1,15 +1,13 @@
-import React from 'react';
-import Appbar from '../../components/Appbar';
-import Cars from '../../components/Cars';
+import React from "react";
+import BaseLayout from "../../components/layouts/BaseLayout";
+import VehicleFetcher from "../../components/vehicles/VehicleFetcher";
 
-function App() {
+function FetchVehicleData() {
   return (
-    <div className="App">
-      <Appbar />
-      <Cars />
-      
-    </div>
+    <BaseLayout>
+      <VehicleFetcher />
+    </BaseLayout>
   );
 }
 
-export default App;
+export default FetchVehicleData;
