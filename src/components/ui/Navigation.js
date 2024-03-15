@@ -10,7 +10,9 @@ const NavLink = ({ href, children }) => {
     <Link
       href={href}
       className={`mr-1 px-1 -mx-1 ${
-        isActive ? "bg-[#832C31] p-1 rounded" : "text-gray-700 font-normal"
+        isActive
+          ? "text-[#832C31] underline font-bold"
+          : "text-gray-700 font-bold"
       }`}
     >
       {children}
@@ -20,12 +22,12 @@ const NavLink = ({ href, children }) => {
 
 export default function Navigation() {
   return (
-    <nav className="flex items-center justify-between bg-[#dbd2c4] p-6">
+    <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
       <div className="flex items-center">
         <img
           src="/TheHartfordIcon.svg"
           alt="logo"
-          className="w-auto h-12 px-2"
+          className="w-auto h-12 pr-10"
         />
         <NavLink href="/">Home</NavLink>
         <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
