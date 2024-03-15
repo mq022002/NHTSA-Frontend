@@ -23,7 +23,7 @@ export default function Navigation() {
     <nav className="flex items-center justify-between bg-[#dbd2c4] p-6">
       <div className="flex items-center">
         <img
-          src="/TheHartfordIcon.png"
+          src="/TheHartfordIcon.svg"
           alt="logo"
           className="w-auto h-12 px-2"
         />
