@@ -20,10 +20,17 @@ const NavLink = ({ href, children }) => {
 
 export default function Navigation() {
   return (
-    <nav className="flex items-center bg-[#dbd2c4] p-6">
-      <img src="/TheHartfordIcon.png" alt="logo" className="w-auto h-12 px-2" />
-      <NavLink href="/">Home</NavLink>
-      <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
+    <nav className="flex items-center justify-between bg-[#dbd2c4] p-6">
+      <div className="flex items-center">
+        <img
+          src="/TheHartfordIcon.png"
+          alt="logo"
+          className="w-auto h-12 px-2"
+        />
+        <NavLink href="/">Home</NavLink>
+        <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
+      </div>
+      <NavLink href="/login">Login</NavLink>
     </nav>
   );
 }
