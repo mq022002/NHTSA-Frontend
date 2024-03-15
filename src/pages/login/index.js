@@ -1,6 +1,6 @@
 import BaseLayout from "../../components/layouts/BaseLayout";
 
-function Login() {
+function LoginPage() {
   return (
     <BaseLayout>
       <div
@@ -60,4 +60,4 @@ function Login() {
     </BaseLayout>
   );
 }
-export default Login;
+export default LoginPage;
