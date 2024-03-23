@@ -1,12 +1,29 @@
 import React, { useState } from "react";
 import { YEARS, MAKES, MAKE_MODEL_MAPPING } from "../../constants/constants";
-import SelectInput from "../ui/SelectInput";
 
 export default function VehicleForm({ fetchData }) {
   const [year, setYear] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [models, setModels] = useState([]);
+
+  const SelectInput = ({ options, value, onChange, disabled }) => (
+    <select
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+    >
+      <option value="" disabled>
+        Select
+      </option>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  );
 
   const handleMakeChange = (event) => {
     const selectedMake = event.target.value;
