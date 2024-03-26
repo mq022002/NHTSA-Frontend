@@ -9,6 +9,7 @@ const RatingInfoBox = ({ ratingField }) => (
     <h2 className="text-lg font-semibold">
       Vehicle: {ratingField.VehicleDescription}
     </h2>
+    {ratingField.MSRP && <RatingField label="MSRP" value={ratingField.MSRP} />}
     <RatingField label="Overall Rating" value={ratingField.OverallRating} />
     <RatingField
       label="Front Crash Rating"

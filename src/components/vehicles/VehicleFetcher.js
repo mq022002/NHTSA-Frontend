@@ -12,20 +12,29 @@ export default function VehicleFetcher() {
 
   const fetchData = async (year, make, model) => {
     try {
-      const response = await axios.get(
-        `/api/fetchData?year=${year}&make=${make}&model=${model}`
-      );
+      setErrorMessage("");
+      const response = await axios.get(`/api/fetchData?year=${year}&make=${make}&model=${model}`);
+      const msrpResponse = await axios.get(`http://localhost:5000/get-msrp?make=${make}&model=${model}`);
+  
+      // Simulate adding MSRP to each rating if ratings are expected to be an array
+      const updatedRatings = response.data.ratings.map(rating => ({
+        ...rating,
+        MSRP: msrpResponse.data.MSRP, // Adjust based on actual structure
+      }));
+      console.log("updated ratings" + updatedRatings);
+
       setData({
         recalls: response.data.recalls,
-        ratings: response.data.ratings,
+        ratings: updatedRatings,
       });
-      setErrorMessage("");
+  
       setHasFetchedData(true);
     } catch (error) {
       setErrorMessage("Error fetching data. Please try again.");
       setHasFetchedData(false);
     }
   };
+  
 
   const handleRecallTabChange = (event, newValue) => {
     setActiveRecallTab(newValue);

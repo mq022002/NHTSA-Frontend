@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { YEARS, MAKES, MAKE_MODEL_MAPPING } from "../../constants/constants";
+import { YEARS, MAKES, MAKE_MODEL_MAPPING } from "../utilities/constants";
 
 export default function VehicleForm({ fetchData }) {
   const [year, setYear] = useState("");
