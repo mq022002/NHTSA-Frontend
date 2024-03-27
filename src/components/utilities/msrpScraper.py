@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-import json
+from concurrent.futures import ThreadPoolExecutor
 
 async def findCarMSRP(make, model):
     base_url = "https://www.edmunds.com"
@@ -38,3 +38,30 @@ def scrapeMSRP(selected_url):
 
     driver.quit()
     return msrp
+
+def scrape_link_sync(make, model):
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.0.0 Safari/537.36")
+
+    with webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options) as driver:
+        detailed_page_url = f'https://www.edmunds.com/{make}/{model}/'
+        driver.get(detailed_page_url)
+        driver.implicitly_wait(10)
+
+        try:
+            image_element = driver.find_element(By.CSS_SELECTOR, "img.photo.w-100")
+            image_url = image_element.get_attribute('src')
+        except:
+            image_url = 'No image found'
+
+        link_url = f'https://www.edmunds.com/inventory/srp.html?radius=50&make={make}&model={make}%7C{model}'
+
+        return image_url, link_url
+async def scrape_link(make, model):
+    loop = asyncio.get_event_loop()
+    with ThreadPoolExecutor() as pool:
+        image_url, link_url = await loop.run_in_executor(pool, scrape_link_sync, make, model)
+        return image_url, link_url

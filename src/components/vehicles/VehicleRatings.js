@@ -35,12 +35,14 @@ const RatingInfoBox = ({ ratingField }) => (
   </div>
 );
 
-const VehicleRatings = ({ ratings }) => (
+const VehicleRatings = ({ ratings, onSelectCar }) => (
   <div className="w-1/2 pr-2">
     <h2 className="text-lg font-semibold">Rating Information</h2>
     {ratings.map((ratingField, index) => (
-      <RatingInfoBox key={index} ratingField={ratingField} />
-    ))}
+      <div key={index} onClick={() => onSelectCar(index)} style={{ cursor: 'pointer' }}>
+          <RatingInfoBox ratingField={ratingField} />
+        </div>
+      ))}
   </div>
 );
 
