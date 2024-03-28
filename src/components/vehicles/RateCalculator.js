@@ -1,4 +1,3 @@
-
 export function calculateInsuranceRate(msrp, overallRating, frontCrashRating, sideCrashRating, rolloverRating, esc, fcw, ldw, recalls) {
   if (msrp === null || overallRating === null || frontCrashRating === null || sideCrashRating === null || rolloverRating === null || esc === null || fcw === null || ldw === null || recalls === null) {
     return "Cannot calculate insurance rate due to missing data.";
