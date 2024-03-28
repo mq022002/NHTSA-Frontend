@@ -4,6 +4,7 @@ import VehicleForm from "./VehicleForm";
 import VehicleRatings from "./VehicleRatings";
 import VehicleRecalls from "./VehicleRecalls";
 import { calculateInsuranceRate } from "./RateCalculator";
+import VehicleImage from '../hooks/VehicleImage'
 
 export default function VehicleFetcher() {
   const [data, setData] = useState({ recalls: [], ratings: [], insuranceRate: "" });
@@ -18,7 +19,7 @@ export default function VehicleFetcher() {
       setErrorMessage("");
       const response = await axios.get(`/api/fetchData?year=${year}&make=${make}&model=${model}`);
       const msrpResponse = await axios.get(`http://localhost:5000/get-msrp?make=${make}&model=${model}`);
-
+  
       if (!response.data || !msrpResponse.data.MSRP) {
         throw new Error("Missing vehicle or MSRP data");
       }
@@ -27,7 +28,8 @@ export default function VehicleFetcher() {
         ...rating,
         MSRP: msrpResponse.data.MSRP, 
       }));
-      
+      console.log("updated ratings" + updatedRatings);
+
       setData({
         recalls: response.data.recalls,
         ratings: updatedRatings,
@@ -85,37 +87,28 @@ export default function VehicleFetcher() {
   }
 }, [selectedCarIndex, data.ratings, data.recalls.length]); 
 
-  return (
-    <div className="container mx-auto p-5">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black" style={{ padding: "50px 20px", width: "auto", margin: "20px auto" }}>
-        <h2 className="text-[#832C31] text-lg font-bold mb-5">Get Vehicle Information</h2>
-        <VehicleForm fetchData={fetchData} />
-        {errorMessage && <p className="text-[#832C31] text-center mt-5">{errorMessage}</p>}
-
-        {hasFetchedData && (
-          <>
-            <div className="flex justify-between mt-2">
-              <VehicleRatings ratings={data.ratings} onSelectCar={handleSelectCar} />
-              <VehicleRecalls recalls={data.recalls} activeRecallTab={activeRecallTab} handleRecallTabChange={handleRecallTabChange} />
+return (
+  <div className="container mx-auto p-5">
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black" style={{ padding: '50px 20px', width: 'auto', margin: '20px auto' }}>
+      <h2 className="text-[#832C31] text-lg font-bold mb-5">Get Vehicle Information</h2>
+      <VehicleForm fetchData={fetchData} />
+      {errorMessage && <p className="text-[#832C31] text-center mt-5">{errorMessage}</p>}
+      <VehicleImage scrapedData={scrapedData} /> 
+      {hasFetchedData && (
+        <>
+          <div className="flex justify-between mt-2">
+          <VehicleRatings ratings={data.ratings} onSelectCar={handleSelectCar} />
+            <VehicleRecalls recalls={data.recalls} activeRecallTab={activeRecallTab} handleRecallTabChange={handleRecallTabChange} />
+          </div>
+          {data.insuranceRate && (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold">Insurance Rate</h3>
+              <p>{data.insuranceRate}</p>
             </div>
-
-            {data.insuranceRate && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold">Insurance Rate</h3>
-                <p>{data.insuranceRate}</p>
-              </div>
-            )}
-
-            {scrapedData.imageUrl && (
-              <div className="mt-4 text-center">
-                <a href={scrapedData.linkUrl} target="_blank" rel="noopener noreferrer">
-                  <img src={scrapedData.imageUrl} alt="Car" style={{ maxWidth: '100%', height: 'auto' }} />
-                </a>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+          )}
+        </>
+      )}
     </div>
-  );
+  </div>
+);
 }
