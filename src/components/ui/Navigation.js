@@ -40,9 +40,9 @@ export default function Navigation() {
       <div className="flex items-center">
         {session ? (
           <>
-            <span className="pr-2 text-black text-bold">
+            <NavLink href="/account" className="pr-2 text-black text-bold">
               {session.user.name}
-            </span>
+            </NavLink>
             <NavLink href="/api/auth/signout">Logout</NavLink>
           </>
         ) : (
