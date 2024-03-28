@@ -18,7 +18,7 @@ export default function VehicleFetcher() {
       setErrorMessage("");
       const response = await axios.get(`/api/fetchData?year=${year}&make=${make}&model=${model}`);
       const msrpResponse = await axios.get(`http://localhost:5000/get-msrp?make=${make}&model=${model}`);
-  
+
       if (!response.data || !msrpResponse.data.MSRP) {
         throw new Error("Missing vehicle or MSRP data");
       }
@@ -27,8 +27,7 @@ export default function VehicleFetcher() {
         ...rating,
         MSRP: msrpResponse.data.MSRP, 
       }));
-      console.log("updated ratings" + updatedRatings);
-
+      
       setData({
         recalls: response.data.recalls,
         ratings: updatedRatings,
