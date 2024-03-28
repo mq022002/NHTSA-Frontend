@@ -32,7 +32,11 @@ export default function Navigation() {
         <NavLink href="/">Home</NavLink>
         <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
       </div>
-      <NavLink href="/login">Login</NavLink>
+      <div className="flex items-center">
+        <NavLink href="/login">Login</NavLink>
+        <span className="pr-2 text-black  text-bold">/</span>
+        <NavLink href="/register">Register</NavLink> 
+      </div>
     </nav>
   );
 }
