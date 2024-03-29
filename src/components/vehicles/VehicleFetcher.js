@@ -5,6 +5,7 @@ import VehicleRatings from "./VehicleRatings";
 import VehicleRecalls from "./VehicleRecalls";
 import { calculateInsuranceRate } from "./RateCalculator";
 import VehicleImage from '../hooks/VehicleImage'
+import CircularDeterminate from "../mui/CircularDeterminate";
 
 export default function VehicleFetcher() {
   const [data, setData] = useState({ recalls: [], ratings: [], insuranceRate: "" });
@@ -13,9 +14,11 @@ export default function VehicleFetcher() {
   const [activeRecallTab, setActiveRecallTab] = useState(0);
   const [scrapedData, setScrapedData] = useState({ imageUrl: '', linkUrl: '' });
   const [selectedCarIndex, setSelectedCarIndex] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (year, make, model) => {
     try {
+      setIsLoading(true);
       setErrorMessage("");
       const response = await axios.get(`/api/fetchData?year=${year}&make=${make}&model=${model}`);
       const combinedDataResponse = await axios.get(`http://localhost:5000/api/car-data?make=${make}&model=${model}`);
@@ -25,7 +28,7 @@ export default function VehicleFetcher() {
         ...rating,
         MSRP: combinedData.msrp_info.MSRP, 
       }));
-      
+
       console.log("updated ratings" + updatedRatings);
 
       setData({
@@ -44,6 +47,8 @@ export default function VehicleFetcher() {
     } catch (error) {
       setErrorMessage("Error fetching data. Please try again.");
       setHasFetchedData(false);
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -90,6 +95,7 @@ return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black" style={{ padding: '50px 20px', width: 'auto', margin: '20px auto' }}>
       <h2 className="text-[#832C31] text-lg font-bold mb-5">Get Vehicle Information</h2>
       <VehicleForm fetchData={fetchData} />
+      {isLoading && <CircularDeterminate/>}
       {errorMessage && <p className="text-[#832C31] text-center mt-5">{errorMessage}</p>}
       <VehicleImage scrapedData={scrapedData} /> 
       {hasFetchedData && (
