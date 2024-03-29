@@ -2,6 +2,7 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 
 const NavLink = ({ href, children, onClick }) => {
   const router = useRouter();
@@ -37,10 +38,12 @@ export default function Navigation() {
   return (
     <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
       <div className="flex items-center">
-        <img
+        <Image
           src="/TheHartfordIcon.svg"
           alt="logo"
           className="w-auto h-12 pr-10"
+          width={50}
+          height={50}
         />
         <NavLink href="/">Home</NavLink>
         {session && (
