@@ -1,30 +1,23 @@
 from flask import Flask, request, jsonify
-from msrpScraper import findCarMSRP 
-from msrpScraper import scrape_link
-import asyncio
+from msrpScraper import get_car_data
 from flask_cors import CORS
+from concurrent.futures import ThreadPoolExecutor
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/get-msrp', methods=['GET'])
-def get_msrp():
-    make = request.args.get('make')
-    model = request.args.get('model')
-    msrp_info = asyncio.run(findCarMSRP(make, model))
-    return jsonify(msrp_info)
-
-@app.route('/api/scrape-link', methods=['GET'])
-def api_scrape_link_endpoint():
+@app.route('/api/car-data', methods=['GET'])
+def get_car_data_api():
     make = request.args.get('make')
     model = request.args.get('model')
     if not make or not model:
-        return jsonify({"error": "Missing parameters"}), 400
-    
+        return jsonify({"error": "Missing make or model parameters"}), 400
+
     try:
-        image_url, link_url = asyncio.run(scrape_link(make, model))
-        return jsonify({"image_url": image_url, "link_url": link_url})
+        result = get_car_data(make, model)
+        return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

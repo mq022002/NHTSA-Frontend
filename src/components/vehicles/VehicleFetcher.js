@@ -18,16 +18,14 @@ export default function VehicleFetcher() {
     try {
       setErrorMessage("");
       const response = await axios.get(`/api/fetchData?year=${year}&make=${make}&model=${model}`);
-      const msrpResponse = await axios.get(`http://localhost:5000/get-msrp?make=${make}&model=${model}`);
-  
-      if (!response.data || !msrpResponse.data.MSRP) {
-        throw new Error("Missing vehicle or MSRP data");
-      }
-
+      const combinedDataResponse = await axios.get(`http://localhost:5000/api/car-data?make=${make}&model=${model}`);
+      const combinedData = combinedDataResponse.data;
+      
       const updatedRatings = response.data.ratings.map(rating => ({
         ...rating,
-        MSRP: msrpResponse.data.MSRP, 
+        MSRP: combinedData.msrp_info.MSRP, 
       }));
+      
       console.log("updated ratings" + updatedRatings);
 
       setData({
@@ -36,10 +34,10 @@ export default function VehicleFetcher() {
         insuranceRate: ""
       });
 
-      const scrapeResponse = await axios.get(`http://localhost:5000/api/scrape-link?make=${make}&model=${model}`);
+      
       setScrapedData({
-        imageUrl: scrapeResponse.data.image_url,
-        linkUrl: scrapeResponse.data.link_url
+        imageUrl: combinedData.link_info.image_url,
+        linkUrl: combinedData.link_info.link_url
       });
   
       setHasFetchedData(true);
