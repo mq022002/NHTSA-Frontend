@@ -1,15 +1,16 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const NavLink = ({ href, children }) => {
+const NavLink = ({ href, children, onClick }) => {
   const router = useRouter();
   const isActive = router.pathname === href;
 
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={`mr-1 px-1 -mx-1 ${
         isActive
           ? "text-[#832C31] underline font-bold"
@@ -23,6 +24,15 @@ const NavLink = ({ href, children }) => {
 
 export default function Navigation() {
   const { data: session } = useSession();
+
+  const handleAuth = (e) => {
+    e.preventDefault();
+    if (!session) {
+      signIn();
+    } else {
+      signOut();
+    }
+  };
 
   return (
     <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
@@ -47,9 +57,9 @@ export default function Navigation() {
           </>
         ) : (
           <>
-            <NavLink href="/login">Login</NavLink>
-            <span className="pr-2 text-black text-bold">/</span>
-            <NavLink href="/register">Register</NavLink>
+            <NavLink href="/login" onClick={handleAuth}>
+              Login / Register
+            </NavLink>
           </>
         )}
       </div>
