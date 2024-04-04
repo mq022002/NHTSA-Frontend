@@ -26,7 +26,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: black;
   font-size: 20px; 
   opacity: 0; 
   transition: opacity 0.2s ease-in-out;
@@ -34,4 +34,98 @@
 
 .image-hover-wrapper:hover .image-hover-text {
   opacity: 1; 
+}
+
+
+/* https://codepen.io/DuskoStamenic/pen/ZEvBKdw */
+@import "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap";
+
+:root {
+  --color: rgb(63 63 63);
+}
+
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+}
+
+.parallax-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /*  this is where the magic happens:  */
+  background-attachment: fixed;
+
+  /* https://s24.q4cdn.com/306296537/files/images/gallery/high_resolution/1a_OVERALL.jpg*/
+  /* Background image for The Hartford */
+  background-image: url(https://s24.q4cdn.com/306296537/files/images/gallery/high_resolution/1a_OVERALL.jpg);
+  background-position: center;
+  background-size: cover;
+  color: var(--color);
+  row-gap: 4rem;
+
+  text-align: center;
+}
+
+.buffer {
+  width: 100%;
+  min-height: 50vh;
+  background-color: var(--color);
+}
+
+.parallax-container2 {
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  padding: 40rem 0 0 0;
+  background-image: url(https://images2.alphacoders.com/712/712566.jpg);
+  gap: 1.6em;
+}
+
+h3 {
+  margin-top: 1em;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.card {
+  display: flex;
+  max-width: 330px;
+  /* min-height: 480px; */
+  flex-direction: column;
+  align-items: center;
+
+  padding-bottom: 1rem;
+  border-radius: 0.5em;
+
+  background-color: white;
+  box-shadow: 0 29px 38px -15px rgb(0 0 0 / 43%);
+  
+}
+
+.card-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 0.3em;
+  background-position: center;
+  background-size: cover;
+}
+
+.card:nth-of-type(1) .card-img {
+  background-image: url(https://specials-images.forbesimg.com/imageserve/6064af50093e0936dc61b40f/2020-Ford-GT/960x0.jpg?fit=scale);
+}
+
+.card:nth-of-type(2) .card-img {
+  background-image: url(https://media.architecturaldigest.com/photos/63079fc7b4858efb76814bd2/16:9/w_1280%2Cc_limit/9.%2520DeLorean-Alpha-5%2520%255BDeLorean%255D.jpg);
+}
+
+.card:nth-of-type(3) .card-img {
+  background-image: url(https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+.card:nth-of-type(4) .card-img {
+  background-image: url(https://storage.googleapis.com/pod_public/1300/166579.jpg);
 }
