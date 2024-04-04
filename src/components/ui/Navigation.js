@@ -15,7 +15,7 @@ const NavLink = ({ href, children, onClick }) => {
       className={`mr-1 px-1 -mx-1 ${
         isActive
           ? "text-[#832C31] underline font-bold"
-          : "text-gray-700 font-bold"
+          : "text-gray-700 hover:text-[#832C31] font-bold"
       }`}
     >
       {children}
