@@ -1,25 +1,19 @@
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import VehicleFetcher from "../../components/vehicles/VehicleFetcher";
 
 function FetchVehicleDataPage() {
-  return <VehicleFetcher />;
-}
+  const { data: session, status } = useSession();
 
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req });
+  if (status === "loading") return null;
 
   if (!session) {
-    return {
-      redirect: {
-        destination: "/api/auth/signin",
-        permanent: false,
-      },
-    };
+    if (typeof window !== "undefined") {
+      window.location.href = "/api/auth/signin";
+    }
+    return null;
   }
 
-  return {
-    props: { session },
-  };
+  return <VehicleFetcher />;
 }
 
 export default FetchVehicleDataPage;
