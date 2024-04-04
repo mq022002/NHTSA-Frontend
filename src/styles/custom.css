@@ -59,6 +59,8 @@ body {
   /*  this is where the magic happens:  */
   background-attachment: fixed;
 
+  /* https://s24.q4cdn.com/306296537/files/images/gallery/high_resolution/1a_OVERALL.jpg*/
+  /* Background image for The Hartford */
   background-image: url(https://s24.q4cdn.com/306296537/files/images/gallery/high_resolution/1a_OVERALL.jpg);
   background-position: center;
   background-size: cover;
@@ -91,7 +93,8 @@ h3 {
 
 .card {
   display: flex;
-  max-width: 320px;
+  max-width: 330px;
+  /* min-height: 480px; */
   flex-direction: column;
   align-items: center;
 
@@ -112,17 +115,17 @@ h3 {
 }
 
 .card:nth-of-type(1) .card-img {
-  background-image: url(https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80);
+  background-image: url(https://specials-images.forbesimg.com/imageserve/6064af50093e0936dc61b40f/2020-Ford-GT/960x0.jpg?fit=scale);
 }
 
 .card:nth-of-type(2) .card-img {
-  background-image: url(https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1606&q=80);
+  background-image: url(https://media.architecturaldigest.com/photos/63079fc7b4858efb76814bd2/16:9/w_1280%2Cc_limit/9.%2520DeLorean-Alpha-5%2520%255BDeLorean%255D.jpg);
 }
 
 .card:nth-of-type(3) .card-img {
-  background-image: url(https://images.unsplash.com/photo-1628746404106-4d3843b231b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2F2aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60);
+  background-image: url(https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
 }
 
 .card:nth-of-type(4) .card-img {
-  background-image: url(https://images.unsplash.com/photo-1496429862132-5ab36b6ae330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80);
+  background-image: url(https://storage.googleapis.com/pod_public/1300/166579.jpg);
 }
