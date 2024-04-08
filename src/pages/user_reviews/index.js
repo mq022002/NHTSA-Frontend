@@ -4,8 +4,11 @@ import { useSession } from "next-auth/react";
 
 function UserReviewsPage() {
   const { data: session } = useSession();
-
   const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState({
+    stars: 0,
+    reviewContent: "",
+  });
 
   useEffect(() => {
     // Fetch user reviews from the API
@@ -22,11 +25,6 @@ function UserReviewsPage() {
 
     fetchReviews();
   }, []);
-
-  const [newReview, setNewReview] = useState({
-    stars: 0,
-    reviewContent: "",
-  });
 
   const handleRatingChange = (newRating) => {
     setNewReview({ ...newReview, stars: newRating });
@@ -71,6 +69,7 @@ function UserReviewsPage() {
         newReview={newReview}
         handleRatingChange={handleRatingChange}
         handleSubmit={handleSubmit}
+        setNewReview={setNewReview}
       />
     </div>
   );

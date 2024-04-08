@@ -17,6 +17,7 @@ const UserReviews = ({
   newReview,
   handleRatingChange,
   handleSubmit,
+  setNewReview,
 }) => {
   const averageRating = calculateAverageRating(reviews);
   console.log("Average Rating:", averageRating);
@@ -84,13 +85,11 @@ const UserReviews = ({
             id="reviewContent"
             name="reviewContent"
             value={newReview.reviewContent}
-            onChange={(e) =>
-              setNewReview({ ...newReview, reviewContent: e.target.value })
-            }
+            onChange={(e) => setNewReview({ ...newReview, reviewContent: e.target.value })}
             required
             className="w-full min-h-[100px] p-2"
             style={{ color: "black" }}
-          />
+      />
         </div>
         <div className="text-center">
           <button
