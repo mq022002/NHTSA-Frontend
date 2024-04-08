@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 function HomePage() {
   return (
@@ -8,8 +8,10 @@ function HomePage() {
           <p className="text-4xl font-bold underline">
             MAHA Insurance Calculator
           </p>
-          <p>We&apos;ll get you where you want to go, with rates that keep you
-            moving forward</p>
+          <p>
+            We&apos;ll get you where you want to go, with rates that keep you
+            moving forward
+          </p>
         </div>
         <div className="w-full h-auto p-4">
           <Image
