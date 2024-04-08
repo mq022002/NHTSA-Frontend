@@ -2,18 +2,46 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 
+const calculateAverageRating = (reviews) => {
+  console.log(reviews); // Check the reviews data
+  if (reviews.length === 0) return 0;
+  const total = reviews.reduce((acc, review) => {
+    console.log(review.stars); // Check each rating
+    return acc + review.stars;
+  }, 0);
+  return total / reviews.length;
+};
+
 const UserReviews = ({
   reviews,
   newReview,
   handleRatingChange,
   handleSubmit,
 }) => {
+  const averageRating = calculateAverageRating(reviews);
+  console.log("Average Rating:", averageRating);
+
   return (
     <div className="max-w-5xl w-9/10">
       {/* Header */}
       <h3 className="p-2 text-xl font-bold text-center text-white bg-black">
         User Reviews
       </h3>
+
+      {/* Average Rating */}
+      <div className="flex flex-col items-center p-2 text-center">
+        <p className="font-bold text-black">Overall Rating</p>
+        <div className="flex justify-center bg-white">
+          <ReactStars
+            count={5}
+            value={averageRating}
+            size={24}
+            activeColor="#ffd700"
+            isHalf={true}
+            edit={false}
+          />
+        </div>
+      </div>
 
       {/* Reviews Card */}
       <div
