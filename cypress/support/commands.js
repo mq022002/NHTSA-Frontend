@@ -26,12 +26,12 @@
 
 Cypress.Commands.add("simulateNextAuthSession", (sessionData) => {
   cy.intercept("GET", "/api/auth/session", { body: sessionData }).as(
-    "getSession"
+    "getSession",
   );
 });
 
 Cypress.Commands.add("clearNextAuthSession", () => {
   cy.intercept("GET", "/api/auth/session", { body: { user: null } }).as(
-    "getSession"
+    "getSession",
   );
 });
