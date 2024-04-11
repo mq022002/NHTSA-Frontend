@@ -34,29 +34,26 @@ function HomePage() {
   return (
     <div className="w-full">
       <div className="flex flex-row items-center justify-center h-[calc(100vh-100px)] p-0 m-0">
-        <div className="text-black ">
+        <div className="mr-4 text-black">
           <p className="text-4xl font-bold underline">
             MAHA Insurance Calculator
           </p>
           <p>
             We&apos;ll get you where you want to go, with rates that keep you
-            moving forward
+            moving forward!
           </p>
-          <div className="p-4 mt-5 mr-3 border border-gray-300 rounded-lg">
-            <p className="text-sm text-black">Average User Rating:</p>
-            <p className="text-xl font-bold text-black">
-              {calculateAverageReviews(reviews).toFixed(1)}{" "}
+          <div className="pr-4 mt-5 mr-3">
+            <p className="text-black">
+              Average User Rating: {calculateAverageReviews(reviews).toFixed(1)}
               {renderStars(calculateAverageReviews(reviews))}
             </p>
-            <hr className="my-4 border-gray-300" />
-            <p className="text-sm text-black">Let Us Know What You Think!</p>
-            <div className="mt-2">
-              <Link href="/user_reviews" legacyBehavior>
-                <a className="px-4 py-2 text-white transition duration-150 ease-in-out bg-blue-500 rounded hover:bg-blue-700">
-                  Click Here
-                </a>
-              </Link>
-            </div>
+          </div>
+          <div className="mt-2">
+            <Link href="/user_reviews" legacyBehavior>
+              <a className="text-sm px-4 py-2 text-white transition duration-150 ease-in-out bg-[#832C31] rounded hover:bg-[#832C31]">
+                Leave us a review here!
+              </a>
+            </Link>
           </div>
         </div>
         <div className="w-1/2 h-auto">
