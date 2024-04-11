@@ -9,9 +9,9 @@ const UserReviews = ({
   setNewReview,
 }) => {
   return (
-    <div className="max-w-5xl w-9/10">
+    <div className="w-full">
       {/* Header */}
-      <h3 className="p-2 text-xl font-bold text-center text-white bg-black">
+      <h3 className="p-2 text-xl font-bold text-center text-white bg-[#832C31]">
         User Reviews
       </h3>
 
