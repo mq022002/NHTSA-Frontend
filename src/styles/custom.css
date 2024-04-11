@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .image-hover-overlay {
@@ -11,13 +11,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 0, 0, 0.2); 
-  opacity: 0; 
-  transition: opacity 0.2s ease-in-out, background 0.2s ease-in-out;
+  background: rgba(255, 0, 0, 0.2);
+  opacity: 0;
+  transition:
+    opacity 0.2s ease-in-out,
+    background 0.2s ease-in-out;
 }
 
 .image-hover-wrapper:hover .image-hover-overlay {
-  opacity: 1; 
+  opacity: 1;
   background: linear-gradient(to right, rgba(255, 0, 0, 0.5), white);
 }
 
@@ -27,15 +29,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: black;
-  font-size: 20px; 
-  opacity: 0; 
+  font-size: 20px;
+  opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
 
 .image-hover-wrapper:hover .image-hover-text {
-  opacity: 1; 
+  opacity: 1;
 }
-
 
 /* https://codepen.io/DuskoStamenic/pen/ZEvBKdw */
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap";
@@ -80,13 +81,13 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  min-height: 50vh; 
-  width: 100%; 
+  min-height: 50vh;
+  width: 100%;
   min-height: 100vh;
-  padding: 2rem; 
+  padding: 2rem;
   background-attachment: fixed;
   background-size: cover;
-  background-image: url(https://s24.q4cdn.com/306296537/files/images/gallery/high_resolution/15_NEW_TWR_ENT.jpg)
+  background-image: url(https://s24.q4cdn.com/306296537/files/images/gallery/high_resolution/15_NEW_TWR_ENT.jpg);
 }
 
 /* Buffer for spacing */
@@ -98,11 +99,12 @@ body {
 
 /* Card Styles */
 .card {
-
   border-radius: 0.5em;
   background-color: white;
   box-shadow: 0 29px 38px -15px rgb(0 0 0 / 43%);
-  flex-basis: calc(33.333% - 20px); /* Example for 3 cards in a row, adjust gap as needed */
+  flex-basis: calc(
+    33.333% - 20px
+  ); /* Example for 3 cards in a row, adjust gap as needed */
   max-height: 400px; /* Adjust based on your needs */
   display: flex;
   flex-direction: column;
@@ -112,7 +114,10 @@ body {
 /* Adjust the card grid layout */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* Adjust based on card size */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(330px, 1fr)
+  ); /* Adjust based on card size */
   gap: 20px; /* Space between cards */
   width: 100%;
   padding: 0 20px; /* Padding on the sides */
@@ -125,7 +130,7 @@ body {
   padding: 1rem;
   border-radius: 0.5em;
   background-color: black;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* Ensure content can scroll */
   max-height: 80vh; /* Adjust based on your needs */
 }

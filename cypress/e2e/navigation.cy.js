@@ -16,7 +16,7 @@ describe("Navigation", () => {
     cy.get("a").contains("Login / Register").click();
     cy.url().should(
       "include",
-      "/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F"
+      "/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F",
     );
   });
 

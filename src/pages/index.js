@@ -1,52 +1,25 @@
-import React, { useEffect, useState } from "react";
-import ReactStars from "react-rating-stars-component";
-import { useSession } from "next-auth/react";
+import Image from "next/image";
+import React, {useState, useEffect } from 'react';
+import Link from 'next/link';
+
+const calculateAverageReviews = (reviews) => {
+  if (!reviews || reviews.length === 0) return 0;
+  const total = reviews.reduce((acc, review) => acc + review.stars, 0);
+  return total / reviews.length;
+};
+
+const renderStars = (rating) => {
+  const roundedRating = Math.round(rating);
+  return '★'.repeat(roundedRating) + '☆'.repeat(5 - roundedRating);
+};
 
 function HomePage() {
-  const { data: session } = useSession();
-  
-  useEffect(() => {
-    const cards = document.querySelectorAll(".card");
-
-    function handleScroll() {
-      const windowCenter = window.innerHeight / 2;
-
-      cards.forEach((card) => {
-        if (card.id === "review-card") {
-          return; 
-        }
-        const bounding = card.getBoundingClientRect();
-        const cardCenter = bounding.top + bounding.height / 2;
-        let opacity;
-
-        if (cardCenter <= windowCenter) {
-          opacity = 1; // Fully solid when the card is above or at the window center
-        } else {
-          const distanceToCenter = Math.abs(cardCenter - windowCenter);
-          opacity = 1 - distanceToCenter / windowCenter;
-        }
-
-        card.style.opacity = opacity;
-      });
-    }
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-
-
   const [reviews, setReviews] = useState([]);
-  
 
   useEffect(() => {
-    // Fetch user reviews from the API 
     const fetchReviews = async () => {
       try {
-        const response = await fetch(process.env.NEXT_PUBLIC_FETCH_REVIEWS);
+        const response = await fetch(process.env.NEXT_PUBLIC_FETCH_REVIEWS); 
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setReviews(data);
@@ -58,213 +31,42 @@ function HomePage() {
     fetchReviews();
   }, []);
 
-  const [newReview, setNewReview] = useState({
-    stars: 0,
-    reviewContent: '',
-  });
-
-  const handleRatingChange = (newRating) => {
-    setNewReview({ ...newReview, stars: newRating });
-  };
-
-  // Review submission logic
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!session) {
-      alert("You must be logged in to submit a review.");
-      return; 
-    }
-    
-    const reviewData = {
-      username: session.user.name,
-      reviewContent: newReview.reviewContent,
-      stars: newReview.stars,
-      datePosted: new Date().toISOString().slice(0, 10),
-    };
-
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_SUBMIT_REVIEW, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reviewData),
-      });
-
-      if (!response.ok) throw new Error('Failed to submit review');
-      alert('Review submitted successfully');
-      e.target.reset(); 
-      setReviews([...reviews, reviewData]); 
-    } catch (error) {
-      console.error('Failed to submit review:', error);
-      alert('Failed to submit review. Please try again.');
-    }
-    setNewReview({ stars: 0, reviewContent: '' });
-  };
-
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen">
-      <section className="text-center parallax-container pb-52">
-        <h1
-          className="text-3xl font-bold md:text-4xl"
-          style={{
-            color: "white",
-            textShadow:
-              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-          }}
-        >
-          The Hartford
-        </h1>
-        <div
-          className="mt-4 text-lg"
-          style={{
-            color: "white",
-            textShadow:
-              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-          }}
-        >
-          <div className="pb-16">
-            The Hartford is a leader in property and casualty insurance, group
-            benefits and mutual funds. We are proud to be widely recognized for
-            our customer service excellence, sustainability practices, trust and
-            integrity.
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)] p-0 m-0">
+      <div className="flex flex-row items-start justify-center w-full p-4">
+        <div className="text-black max-w-md">
+          <p className="text-4xl font-bold underline">
+            MAHA Insurance Calculator
+          </p>
+          <p>
+            We&apos;ll get you where you want to go, with rates that keep you moving forward
+          </p>
+          <div className="mt-4 border border-gray-300 rounded-lg p-4">
+            <p className="text-sm text-black">Average User Rating:</p>
+            <p className="text-xl font-bold text-black">
+              {calculateAverageReviews(reviews).toFixed(1)} {renderStars(calculateAverageReviews(reviews))}
+            </p>
+            <hr className="my-4 border-gray-300" />
+            <p className="text-sm text-black">Let Us Know What You Think!</p>
+            <div className="mt-2">
+              <Link href="/user_reviews" legacyBehavior>
+                <a className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-150 ease-in-out">
+                  Click Here
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
-
-      <section className="buffer"></section>
-
-      <section className="grid grid-cols-1 gap-6 py-12 parallax-container parallax-container2 md:grid-cols-2 lg:grid-cols-4">
-      <div className="flex flex-col justify-between h-full p-2 card">
-    <div>
-      <div className="h-48 bg-center bg-cover card-img"></div>
-      <h3 className="mt-4 text-xl font-bold">Fetch Data</h3>
-      <div className="content-center h-20 pb-2">
-        <p>
-          Get a calculated insurance rate for your car.
-        </p>
+        <div className="w-full h-auto max-w-md p-4">
+          <Image
+            src="/Navigator.svg"
+            alt="car driving to checkpoint"
+            layout="responsive"
+            width={500}
+            height={300}
+          />
+        </div>
       </div>
-    </div>
-    <div className="mt-auto pb-14">
-      <a href="#" className="inline-block px-4 py-2 font-bold text-white bg-gray-800 rounded-lg">Learn more</a>
-    </div>
-  </div>
-
-  <div className="h-full p-2 card">
-    <div className="h-48 bg-center bg-cover card-img"></div>
-    <h3 className="mt-4 text-xl font-bold">About</h3>
-    <div className="content-center h-20 pb-2">
-      <p>
-        Learn more about our team, Team MAHA.
-      </p>
-    </div>
-    <div className="mt-auto pb-14">
-      <a href="#" className="inline-block px-4 py-2 font-bold text-white bg-gray-800 rounded-lg">Learn more</a>
-    </div>
-        </div>
-
-        <div className="flex flex-col justify-between h-full p-2 card">
-          <div>
-            <div className="h-48 bg-center bg-cover card-img"></div>
-            <h3 className="mt-4 text-xl font-bold">User Reviews</h3>
-            <div className="content-center h-20 pb-2">
-              <p>
-                Take a look at what users think about our website.
-              </p>
-            </div>
-          </div>
-          <div className="mt-auto pb-14">
-            <a
-              href="#"
-              className="inline-block px-4 py-2 font-bold text-white bg-gray-800 rounded-lg"
-            >
-              Learn more
-            </a>
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between h-full p-2 card">
-          <div>
-            <div className="h-48 bg-center bg-cover card-img"></div>
-            <h3 className="mt-4 text-xl font-bold">IDK yet</h3>
-            <div className="content-center h-20 pb-2">
-              <p>
-                Get lift off from the mountain and enjoy through the splendor of the surrounding landscape by parachute.
-              </p>
-            </div>
-          </div>
-          <div className="mt-auto pb-14">
-            <a
-              href="#"
-              className="inline-block px-4 py-2 font-bold text-white bg-gray-800 rounded-lg"
-            >
-              Learn more
-            </a>
-          </div>
-        </div>
-        </section>
-
-        <section className="buffer"></section>
-
-        
-      <section className="flex items-center justify-center w-full mt-10 parallax-container3">
-        <div className="max-w-5xl w-9/10">
-          {/* Header */}
-          <h3 className="p-2 text-xl font-bold text-center text-white bg-black">
-            User Reviews
-          </h3>
-
-          {/* Reviews Card */}
-          <div className="overflow-auto review-card border-x border-y-0" style={{ maxHeight: "65vh" }}>
-            {reviews.length > 0 ? (
-              reviews.map((review, index) => (
-                <div key={index} className="p-4 mb-4">
-                  <p className="font-bold">{review.username}</p>
-                  <ReactStars
-                    value={review.stars}
-                    edit={false}
-                    size={24}
-                    activeColor="#ffd700"
-                  />
-                  <p>{review.reviewContent}</p>
-                  <p className="text-sm">{review.datePosted}</p>
-                </div>
-              ))
-            ) : (
-              <p className="py-4 text-center">No reviews yet.</p>
-            )}
-          </div>
-
-          {/* Submission Form */}
-          <form onSubmit={handleSubmit} className="p-2 mt-4 bg-black">
-            <div className="mb-2 text-center">
-    
-              <ReactStars
-                count={5}
-                onChange={handleRatingChange}
-                size={24}
-                activeColor="#ffd700"
-                value={newReview.stars}
-              />
-            </div>
-            <div className="mb-2 text-center">
-              <label htmlFor="reviewContent">Submit Your Own Review Below:</label>
-              <textarea
-                id="reviewContent"
-                name="reviewContent"
-                value={newReview.reviewContent}
-                onChange={(e) => setNewReview({ ...newReview, reviewContent: e.target.value })}
-                required
-                className="w-full min-h-[100px] p-2"
-                style={{ color: 'black' }}
-              />
-            </div>
-            <div className="text-center">
-              <button type="submit" className="px-4 py-2 font-bold text-white bg-gray-800 rounded-lg">
-                Submit Review
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
     </div>
   );
 }
