@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"python src\\components\\utilities\\scraperApi.py\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
+    "concurrently": "^8.2.2",
     "cypress": "^13.7.2",
     "eslint": "^8",
     "eslint-config-next": "14.1.3",
