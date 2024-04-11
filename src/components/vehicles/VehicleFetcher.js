@@ -124,6 +124,12 @@ export default function VehicleFetcher() {
         <VehicleImage scrapedData={scrapedData} />
         {hasFetchedData && (
           <>
+          {data.insuranceRate && (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold">Insurance Rate</h3>
+              <p>{data.insuranceRate}</p>
+            </div>
+          )}
             <div className="flex justify-between mt-2">
               <VehicleRatings
                 ratings={data.ratings}
@@ -135,12 +141,6 @@ export default function VehicleFetcher() {
                 handleRecallTabChange={handleRecallTabChange}
               />
             </div>
-            {data.insuranceRate && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold">Insurance Rate</h3>
-                <p>{data.insuranceRate}</p>
-              </div>
-            )}
           </>
         )}
       </div>
