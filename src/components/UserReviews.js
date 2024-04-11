@@ -1,4 +1,3 @@
-// UserReviews.js
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 
@@ -17,10 +16,7 @@ const UserReviews = ({
       </h3>
 
       {/* Reviews Card */}
-      <div
-        className="overflow-auto review-card border-x border-y-0"
-        style={{ maxHeight: "65vh" }}
-      >
+      <div className="overflow-auto border-x border-y-0 h-[65vh] review-card">
         {reviews.length > 0 ? (
           reviews.map((review, index) => (
             <div key={index} className="p-4 mb-4">
@@ -61,8 +57,7 @@ const UserReviews = ({
               setNewReview({ ...newReview, reviewContent: e.target.value })
             }
             required
-            className="w-full min-h-[100px] p-2"
-            style={{ color: "black" }}
+            className="w-full h-[100px] p-2 text-black"
           />
         </div>
         <div className="text-center">
