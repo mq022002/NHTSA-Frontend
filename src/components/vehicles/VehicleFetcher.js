@@ -24,11 +24,12 @@ export default function VehicleFetcher() {
     try {
       setIsLoading(true);
       setErrorMessage("");
+      const endpoint = process.env.NEXT_PUBLIC_FETCH_DATA_ENDPOINT;
       const response = await axios.get(
-        `/api/fetchData?year=${year}&make=${make}&model=${model}`,
+        `${endpoint}?year=${year}&make=${make}&model=${model}`
       );
       const combinedDataResponse = await axios.get(
-        `http://localhost:5000/api/car-data?make=${make}&model=${model}`,
+        `http://localhost:5000/api/car-data?make=${make}&model=${model}`
       );
       const combinedData = combinedDataResponse.data;
 
@@ -96,7 +97,7 @@ export default function VehicleFetcher() {
           selectedCar.NHTSAElectronicStabilityControl === "Standard",
           selectedCar.NHTSAForwardCollisionWarning === "Yes",
           selectedCar.NHTSALaneDepartureWarning === "Yes",
-          data.recalls.length,
+          data.recalls.length
         );
 
         setData((prevData) => ({
@@ -108,9 +109,9 @@ export default function VehicleFetcher() {
   }, [selectedCarIndex, data.ratings, data.recalls.length]);
 
   return (
-    <div className="container mx-auto p-5">
+    <div className="container p-5 mx-auto">
       <div
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 text-black"
+        className="flex flex-col px-8 pt-6 pb-8 my-2 mb-4 text-black bg-white rounded shadow-md"
         style={{ padding: "50px 20px", width: "auto", margin: "20px auto" }}
       >
         <h2 className="text-[#832C31] text-lg font-bold mb-5">
@@ -124,12 +125,12 @@ export default function VehicleFetcher() {
         <VehicleImage scrapedData={scrapedData} />
         {hasFetchedData && (
           <>
-          {data.insuranceRate && (
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold">Insurance Rate</h3>
-              <p>{data.insuranceRate}</p>
-            </div>
-          )}
+            {data.insuranceRate && (
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold">Insurance Rate</h3>
+                <p>{data.insuranceRate}</p>
+              </div>
+            )}
             <div className="flex justify-between mt-2">
               <VehicleRatings
                 ratings={data.ratings}
