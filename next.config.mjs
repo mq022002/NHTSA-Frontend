@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output:
-    process.env.NEXT_PUBLIC_ENVIRONMENT === "production" ? "export" : "server",
-};
+const nextConfig = {};
+
+if (process.env.NEXT_PUBLIC_ENVIRONMENT === "production") {
+  nextConfig.output = "export";
+}
 
 export default nextConfig;
