@@ -38,7 +38,7 @@ def findCarMSRP_sync(make, model, driver):
     try:
         url = f"https://www.edmunds.com/{make}/{model}/"
         driver.get(url)
-        msrp_element = driver.find_element(By.CSS_SELECTOR, 'div[data-tracking-parent="msrp_range"] span.font-weight-bold')
+        msrp_element = driver.find_element(By.CSS_SELECTOR, 'div[data-tracking-parent="msrp_range"] strong.size-20')
         msrp_text = msrp_element.text
         msrp_text_first_line = msrp_text.split('\n')[0]  
         msrp_info = {"MSRP": msrp_text_first_line}
