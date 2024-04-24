@@ -1,0 +1,33 @@
+name: Sync ./out to S3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Make the AWS config
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Install dependencies
+        run: npm ci
+      - name: Produce out/ directory
+        run: npm run build
+        env:
+          NEXT_PUBLIC_ENVIRONMENT: ${{ secrets.NEXT_PUBLIC_ENVIRONMENT }}
+      - name: Start development server
+        run: npm run dev &
+      - name: Run Cypress Test
+        run: npx cypress run --spec "cypress/e2e/tests.cy.js"
+      - name: Stop development server
+        run: kill $(lsof -t -i:3000)
+      - name: Push out/ to S3
+        run: aws s3 sync out/ s3://${{ secrets.BUCKET_ID }}
