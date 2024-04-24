@@ -22,6 +22,12 @@ jobs:
       - name: Produce out/ directory
         run: npm run build
         env:
+          NEXT_PUBLIC_FETCH_DATA_ENDPOINT: ${{ secrets.NEXT_PUBLIC_FETCH_DATA_ENDPOINT }}
+          COGNITO_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
+          COGNITO_CLIENT_SECRET: ${{ secrets.COGNITO_CLIENT_SECRET }}
+          COGNITO_ISSUER: ${{ secrets.COGNITO_ISSUER }}
+          NEXT_PUBLIC_FETCH_REVIEWS: ${{ secrets.NEXT_PUBLIC_FETCH_REVIEWS }}
+          NEXT_PUBLIC_SUBMIT_REVIEW: ${{ secrets.NEXT_PUBLIC_SUBMIT_REVIEW }}
           NEXT_PUBLIC_ENVIRONMENT: ${{ secrets.NEXT_PUBLIC_ENVIRONMENT }}
       - name: Start development server
         run: npm run dev &
