@@ -21,43 +21,58 @@ export default function VehicleFetcher() {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (year, make, model) => {
+    let response;
+    let combinedDataResponse;
+
+    setIsLoading(true);
+    setErrorMessage("");
+    const endpoint = process.env.NEXT_PUBLIC_FETCH_DATA_ENDPOINT;
+
     try {
-      setIsLoading(true);
-      setErrorMessage("");
-      const endpoint = process.env.NEXT_PUBLIC_FETCH_DATA_ENDPOINT;
-      const response = await axios.get(
+      response = await axios.get(
         `${endpoint}?year=${year}&make=${make}&model=${model}`
       );
-      const combinedDataResponse = await axios.get(
+
+      if (response && response.data) {
+        setData({
+          recalls: response.data.recalls,
+          ratings: response.data.ratings,
+          insuranceRate: "",
+        });
+        setHasFetchedData(true);
+      }
+    } catch (error) {
+      console.error("Error fetching data from first API.", error);
+    }
+
+    try {
+      combinedDataResponse = await axios.get(
         `http://localhost:5000/api/car-data?make=${make}&model=${model}`
       );
-      const combinedData = combinedDataResponse.data;
 
-      const updatedRatings = response.data.ratings.map((rating) => ({
-        ...rating,
-        MSRP: combinedData.msrp_info.MSRP,
-      }));
+      if (combinedDataResponse && combinedDataResponse.data) {
+        const combinedData = combinedDataResponse.data;
 
-      console.log("updated ratings" + updatedRatings);
+        const updatedRatings = response?.data?.ratings.map((rating) => ({
+          ...rating,
+          MSRP: combinedData.msrp_info.MSRP,
+        }));
 
-      setData({
-        recalls: response.data.recalls,
-        ratings: updatedRatings,
-        insuranceRate: "",
-      });
+        setData((prevData) => ({
+          ...prevData,
+          ratings: updatedRatings || prevData.ratings,
+        }));
 
-      setScrapedData({
-        imageUrl: combinedData.link_info.image_url,
-        linkUrl: combinedData.link_info.link_url,
-      });
-
-      setHasFetchedData(true);
+        setScrapedData({
+          imageUrl: combinedData.link_info.image_url,
+          linkUrl: combinedData.link_info.link_url,
+        });
+      }
     } catch (error) {
-      setErrorMessage("Error fetching data. Please try again.");
-      setHasFetchedData(false);
-    } finally {
-      setIsLoading(false);
+      console.error("Error fetching data from second API.", error);
     }
+
+    setIsLoading(false);
   };
 
   const handleSelectCar = (index) => {
