@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -57,12 +57,10 @@ function HomePage() {
           </div>
         </div>
         <div className="w-full h-auto md:w-1/2">
-          <Image
+          <img
             src="/Navigator.svg"
             alt="car driving to checkpoint"
-            layout="responsive"
-            width={500}
-            height={300}
+            className="object-cover object-center w-full h-full"
           />
         </div>
       </div>
