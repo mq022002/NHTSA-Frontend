@@ -47,6 +47,7 @@ export default function Navigation() {
         {session && (
           <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
         )}
+        <NavLink href="/about">About</NavLink>
       </div>
       <div className="flex items-center">
         {session ? (
