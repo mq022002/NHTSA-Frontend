@@ -33,10 +33,10 @@ function AboutPage() {
               MAHA is an acronym representing the union of its four foundational
               members-- Matt, Alem, Hooghir and Antonio. Matt, the maestro,
               orchestrates project direction and ensuring all parts of the
-              engineering machine are aligned with the team's goals and client
-              needs. Alem, the backbone of the operation, focusing on the
+              engineering machine are aligned with the team&apos;s goals and
+              client needs. Alem, the backbone of the operation, focusing on the
               backend where he manages server-side logic and databases. Hooghir,
-              the creative force behing the team's UI designs. He crafts
+              the creative force behing the team&apos;s UI designs. He crafts
               interfaces that speak to the user and invite engagement. Antonio,
               the guardian of the digital domain, focusing on security. He
               ensures both client data and user privacy. Together, we have
