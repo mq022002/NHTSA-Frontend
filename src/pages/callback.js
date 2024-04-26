@@ -62,9 +62,11 @@ export default function Callback() {
 
           const user = JSON.parse(jsonPayload);
           localStorage.setItem("cognitoUser", JSON.stringify(user));
+
+          router.push("/");
         });
     }
-  }, [router.query]);
+  }, [router, router.query]);
 
   return <div>Processing...</div>;
 }
