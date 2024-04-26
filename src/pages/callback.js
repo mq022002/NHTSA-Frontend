@@ -7,6 +7,12 @@ export default function Callback() {
   useEffect(() => {
     const { code } = router.query;
 
+    const user = JSON.parse(localStorage.getItem("cognitoUser"));
+    if (user) {
+      router.push("/");
+      return;
+    }
+
     if (code) {
       const details = {
         grant_type: "authorization_code",
