@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import * as React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -44,8 +43,13 @@ export default function Navigation() {
           className="object-cover object-center w-auto h-12 pr-10"
         />
         <NavLink href="/">Home</NavLink>
-        {session && (
-          <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
+        {session && session.user && (
+          <>
+            <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
+            {session.user.groups && session.user.groups.includes('superusers') && (
+              <NavLink href="/admin">Admin</NavLink>
+            )}
+          </>
         )}
         <NavLink href="/about">About</NavLink>
       </div>
