@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import { SessionContext } from "../context/SessionContext";
 
 export default function Callback() {
   const router = useRouter();
+  const { signIn } = useContext(SessionContext);
 
   useEffect(() => {
     const { code } = router.query;
@@ -28,7 +30,6 @@ export default function Callback() {
             encodeURIComponent(key) + "=" + encodeURIComponent(details[key])
         )
         .join("&");
-      console.log("Request body:", formBody);
 
       fetch(
         "https://maha-user-pool.auth.us-east-1.amazoncognito.com/oauth2/token",
@@ -50,11 +51,6 @@ export default function Callback() {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
-          localStorage.setItem("accessToken", data.access_token);
-          localStorage.setItem("idToken", data.id_token);
-          localStorage.setItem("refreshToken", data.refresh_token);
-
           const base64Url = data.id_token.split(".")[1];
           const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
           const jsonPayload = decodeURIComponent(
@@ -67,12 +63,10 @@ export default function Callback() {
           );
 
           const user = JSON.parse(jsonPayload);
-          localStorage.setItem("cognitoUser", JSON.stringify(user));
-
-          router.push("/");
+          signIn(data.access_token, data.id_token, data.refresh_token, user);
         });
     }
-  }, [router, router.query]);
+  }, [router, router.query, signIn]);
 
   return <div>Processing...</div>;
 }

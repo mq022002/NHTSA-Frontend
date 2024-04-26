@@ -27,8 +27,13 @@ export const SessionProvider = ({ children }) => {
     setIsLoading(false);
   }, []);
 
-  const signIn = () => {
-    router.push("/login");
+  const signIn = (accessToken, idToken, refreshToken, user) => {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("idToken", idToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("cognitoUser", JSON.stringify(user));
+    setSession({ user });
+    router.replace("/");
   };
 
   const signOut = () => {
