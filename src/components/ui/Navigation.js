@@ -2,16 +2,15 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { SessionContext } from "../../context/SessionContext";
 
-const NavLink = ({ href, children, onClick }) => {
+const NavLink = ({ href, children }) => {
   const router = useRouter();
   const isActive = router.pathname === href;
 
   return (
     <Link
       href={href}
-      onClick={onClick}
       className={`mr-1 px-1 -mx-1 ${
         isActive
           ? "text-[#832C31] underline font-bold"
@@ -24,16 +23,7 @@ const NavLink = ({ href, children, onClick }) => {
 };
 
 export default function Navigation() {
-  const { data: session } = useSession();
-
-  const handleAuth = (e) => {
-    e.preventDefault();
-    if (!session) {
-      signIn();
-    } else {
-      signOut();
-    }
-  };
+  const { session } = React.useContext(SessionContext);
 
   return (
     <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
@@ -55,11 +45,13 @@ export default function Navigation() {
             <NavLink href="/account" className="pr-2 text-black text-bold">
               {session.user.name}
             </NavLink>
-            <NavLink href="/api/auth/signout">Logout</NavLink>
+            <NavLink href="https://maha-user-pool.auth.us-east-1.amazoncognito.com/logout?client_id=2uanm16gnugk14hr8un5ohk1q5&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F">
+              Logout
+            </NavLink>
           </>
         ) : (
           <>
-            <NavLink href="/login" onClick={handleAuth}>
+            <NavLink href="https://maha-user-pool.auth.us-east-1.amazoncognito.com/login?client_id=2uanm16gnugk14hr8un5ohk1q5&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback">
               Login / Register
             </NavLink>
           </>
