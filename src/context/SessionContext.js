@@ -21,19 +21,26 @@ export const SessionProvider = ({ children }) => {
     if (accessToken && idToken && refreshToken) {
       const user = JSON.parse(localStorage.getItem("cognitoUser"));
       setSession({ user });
-      setIsLoading(false);
     } else {
       setSession(null);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, []);
 
   const signIn = () => {
     router.push("/login");
   };
 
+  const signOut = () => {
+    localStorage.clear();
+    setSession(null);
+    router.push("/");
+  };
+
   return (
-    <SessionContext.Provider value={{ session, setSession, signIn, isLoading }}>
+    <SessionContext.Provider
+      value={{ session, setSession, signIn, signOut, isLoading }}
+    >
       {children}
     </SessionContext.Provider>
   );
