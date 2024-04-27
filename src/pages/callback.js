@@ -5,13 +5,14 @@ import { SessionContext } from "../context/SessionContext";
 export default function Callback() {
   const router = useRouter();
   const { signIn } = useContext(SessionContext);
+  const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   useEffect(() => {
     const { code } = router.query;
 
     const user = JSON.parse(localStorage.getItem("cognitoUser"));
     if (user) {
-      router.push("/index.html");
+      router.push(isProduction ? "/index.html" : "/");
       return;
     }
 
@@ -21,7 +22,9 @@ export default function Callback() {
         client_id: "2uanm16gnugk14hr8un5ohk1q5",
         client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
         code,
-        redirect_uri: "https://maha-hosting-bucket.s3.amazonaws.com/callback.html",
+        redirect_uri: isProduction
+          ? "https://maha-hosting-bucket.s3.amazonaws.com/callback.html"
+          : "http://localhost:3000/callback",
       };
 
       const formBody = Object.keys(details)

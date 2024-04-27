@@ -15,6 +15,7 @@ const renderStars = (rating) => {
 
 function HomePage() {
   const [reviews, setReviews] = useState([]);
+  const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -49,7 +50,10 @@ function HomePage() {
             </p>
           </div>
           <div className="mt-2">
-            <Link href="/user_reviews.html" legacyBehavior>
+            <Link
+              href={isProduction ? "/user_reviews.html" : "/user_reviews"}
+              legacyBehavior
+            >
               <a className="text-sm px-4 py-2 text-white transition duration-150 ease-in-out bg-[#832C31] rounded hover:bg-[#832C31]">
                 Leave us a review here!
               </a>

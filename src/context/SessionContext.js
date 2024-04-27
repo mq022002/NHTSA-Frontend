@@ -7,6 +7,7 @@ export const SessionProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -33,13 +34,13 @@ export const SessionProvider = ({ children }) => {
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("cognitoUser", JSON.stringify(user));
     setSession({ user });
-    router.replace("/index.html");
+    router.replace(isProduction ? "/index.html" : "/");
   };
 
   const signOut = () => {
     localStorage.clear();
     setSession(null);
-    router.push("/index.html");
+    router.push(isProduction ? "/index.html" : "/");
   };
 
   return (
