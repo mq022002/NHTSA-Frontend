@@ -34,13 +34,13 @@ export const SessionProvider = ({ children }) => {
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("cognitoUser", JSON.stringify(user));
     setSession({ user });
-    router.replace(isProduction ? "/index.html" : "/");
+    router.replace(isProduction ? "/index.html" : "/index");
   };
 
   const signOut = () => {
     localStorage.clear();
     setSession(null);
-    router.push(isProduction ? "/index.html" : "/");
+    router.push(isProduction ? "/index.html" : "/index");
   };
 
   return (

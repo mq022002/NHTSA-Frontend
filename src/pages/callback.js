@@ -12,7 +12,7 @@ export default function Callback() {
 
     const user = JSON.parse(localStorage.getItem("cognitoUser"));
     if (user) {
-      router.push(isProduction ? "/index.html" : "/");
+      router.push(isProduction ? "/index.html" : "/index");
       return;
     }
 

@@ -34,7 +34,7 @@ export default function Navigation() {
           alt="logo"
           className="object-cover object-center w-auto h-12 pr-10"
         />
-        <NavLink href={isProduction ? "/index.html" : "/"}>Home</NavLink>
+        <NavLink href={isProduction ? "/index.html" : "/index"}>Home</NavLink>
         {session && (
           <NavLink
             href={
@@ -56,7 +56,7 @@ export default function Navigation() {
               {session.user.name}
             </NavLink>
             <NavLink
-              href={isProduction ? "/index.html" : "/"}
+              href={isProduction ? "/index.html" : "/index"}
               onClick={signOut}
             >
               Logout
