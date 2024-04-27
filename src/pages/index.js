@@ -49,7 +49,7 @@ function HomePage() {
             </p>
           </div>
           <div className="mt-2">
-            <Link href="/user_reviews" legacyBehavior>
+            <Link href="/user_reviews.html" legacyBehavior>
               <a className="text-sm px-4 py-2 text-white transition duration-150 ease-in-out bg-[#832C31] rounded hover:bg-[#832C31]">
                 Leave us a review here!
               </a>

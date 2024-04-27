@@ -34,25 +34,25 @@ export default function Navigation() {
           alt="logo"
           className="object-cover object-center w-auto h-12 pr-10"
         />
-        <NavLink href="/">Home</NavLink>
+        <NavLink href="/index.html">Home</NavLink>
         {session && (
-          <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
+          <NavLink href="/fetch_vehicle_data.html">Fetch Vehicle Data</NavLink>
         )}
-        <NavLink href="/about">About</NavLink>
+        <NavLink href="/about.html">About</NavLink>
       </div>
       <div className="flex items-center">
         {session ? (
           <>
-            <NavLink href="/account" className="pr-2 text-black text-bold">
+            <NavLink href="/account.html" className="pr-2 text-black text-bold">
               {session.user.name}
             </NavLink>
-            <NavLink href="/" onClick={signOut}>
+            <NavLink href="/index.html" onClick={signOut}>
               Logout
             </NavLink>
           </>
         ) : (
           <>
-            <NavLink href="https://maha-user-pool.auth.us-east-1.amazoncognito.com/login?client_id=2uanm16gnugk14hr8un5ohk1q5&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback">
+            <NavLink href="https://maha-user-pool.auth.us-east-1.amazoncognito.com/login?client_id=2uanm16gnugk14hr8un5ohk1q5&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https%3A%2F%2Fmaha-hosting-bucket.s3.amazonaws.com%2Fcallback.html">
               Login / Register
             </NavLink>
           </>

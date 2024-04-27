@@ -11,7 +11,7 @@ export default function Callback() {
 
     const user = JSON.parse(localStorage.getItem("cognitoUser"));
     if (user) {
-      router.push("/");
+      router.push("/index.html");
       return;
     }
 
@@ -21,7 +21,7 @@ export default function Callback() {
         client_id: "2uanm16gnugk14hr8un5ohk1q5",
         client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
         code,
-        redirect_uri: "http://localhost:3000/callback",
+        redirect_uri: "https://maha-hosting-bucket.s3.amazonaws.com/callback.html",
       };
 
       const formBody = Object.keys(details)
