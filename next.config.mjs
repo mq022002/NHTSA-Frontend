@@ -6,7 +6,7 @@ if (process.env.NEXT_PUBLIC_ENVIRONMENT !== "production") {
     return [
       {
         source: "/",
-        destination: "/index",
+        destination: "/home",
         permanent: true,
       },
     ];

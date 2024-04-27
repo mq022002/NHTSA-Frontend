@@ -6,7 +6,7 @@ import { SessionContext } from "../../context/SessionContext";
 
 const NavLink = ({ href, children, onClick }) => {
   const router = useRouter();
-  const isActive = router.pathname === href.replace('.html', '');
+  const isActive = router.pathname === href.replace(".html", "");
 
   return (
     <Link
@@ -34,7 +34,7 @@ export default function Navigation() {
           alt="logo"
           className="object-cover object-center w-auto h-12 pr-10"
         />
-        <NavLink href={isProduction ? "/index.html" : "/index"}>Home</NavLink>
+        <NavLink href={isProduction ? "/home.html" : "/home"}>Home</NavLink>
         {session && (
           <NavLink
             href={
@@ -56,7 +56,7 @@ export default function Navigation() {
               {session.user.name}
             </NavLink>
             <NavLink
-              href={isProduction ? "/index.html" : "/index"}
+              href={isProduction ? "/home.html" : "/home"}
               onClick={signOut}
             >
               Logout
