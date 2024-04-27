@@ -2,11 +2,11 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { SessionContext } from "../../context/SessionContext";
 
 const NavLink = ({ href, children, onClick }) => {
   const router = useRouter();
-  const isActive = router.pathname === href;
+  const isActive = router.pathname === href.replace(".html", "");
 
   return (
     <Link
@@ -22,18 +22,9 @@ const NavLink = ({ href, children, onClick }) => {
     </Link>
   );
 };
-
 export default function Navigation() {
-  const { data: session } = useSession();
-
-  const handleAuth = (e) => {
-    e.preventDefault();
-    if (!session) {
-      signIn();
-    } else {
-      signOut();
-    }
-  };
+  const { session, signOut } = React.useContext(SessionContext);
+  const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   return (
     <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
@@ -43,23 +34,43 @@ export default function Navigation() {
           alt="logo"
           className="object-cover object-center w-auto h-12 pr-10"
         />
-        <NavLink href="/">Home</NavLink>
+        <NavLink href={isProduction ? "/home.html" : "/home"}>Home</NavLink>
         {session && (
-          <NavLink href="/fetch_vehicle_data">Fetch Vehicle Data</NavLink>
+          <NavLink
+            href={
+              isProduction ? "/fetch_vehicle_data.html" : "/fetch_vehicle_data"
+            }
+          >
+            Fetch Vehicle Data
+          </NavLink>
         )}
-        <NavLink href="/about">About</NavLink>
+        <NavLink href={isProduction ? "/about.html" : "/about"}>About</NavLink>
       </div>
       <div className="flex items-center">
         {session ? (
           <>
-            <NavLink href="/account" className="pr-2 text-black text-bold">
+            <NavLink
+              href={isProduction ? "/account.html" : "/account"}
+              className="pr-2 text-black text-bold"
+            >
               {session.user.name}
             </NavLink>
-            <NavLink href="/api/auth/signout">Logout</NavLink>
+            <NavLink
+              href={isProduction ? "/home.html" : "/home"}
+              onClick={signOut}
+            >
+              Logout
+            </NavLink>
           </>
         ) : (
           <>
-            <NavLink href="/login" onClick={handleAuth}>
+            <NavLink
+              href={
+                isProduction
+                  ? "https://maha-user-pool.auth.us-east-1.amazoncognito.com/login?client_id=2uanm16gnugk14hr8un5ohk1q5&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https%3A%2F%2Fmaha-hosting-bucket.s3.amazonaws.com%2Fcallback.html"
+                  : "https://maha-user-pool.auth.us-east-1.amazoncognito.com/login?client_id=2uanm16gnugk14hr8un5ohk1q5&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback"
+              }
+            >
               Login / Register
             </NavLink>
           </>

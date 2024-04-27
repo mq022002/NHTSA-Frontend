@@ -1,9 +1,9 @@
 import UserReviews from "../../components/UserReviews";
-import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import React, { useEffect, useState, useContext } from "react";
+import { SessionContext } from "../../context/SessionContext";
 
 function UserReviewsPage() {
-  const { data: session } = useSession();
+  const { session } = useContext(SessionContext);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
     stars: 0,
