@@ -69,7 +69,7 @@ export default function Callback() {
           signIn(data.access_token, data.id_token, data.refresh_token, user);
         });
     }
-  }, [router, router.query, signIn]);
+  }, [isProduction, router, router.query, signIn]);
 
   return <div>Processing...</div>;
 }
