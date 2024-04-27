@@ -6,7 +6,7 @@ import { SessionContext } from "../../context/SessionContext";
 
 const NavLink = ({ href, children, onClick }) => {
   const router = useRouter();
-  const isActive = router.pathname === href;
+  const isActive = router.pathname === href.replace('.html', '');
 
   return (
     <Link
