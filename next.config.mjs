@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  async redirects() {
+const nextConfig = {};
+
+if (process.env.NEXT_PUBLIC_ENVIRONMENT !== "production") {
+  nextConfig.redirects = async () => {
     return [
       {
         source: "/",
@@ -8,10 +10,8 @@ const nextConfig = {
         permanent: true,
       },
     ];
-  },
-};
-
-if (process.env.NEXT_PUBLIC_ENVIRONMENT === "production") {
+  };
+} else {
   nextConfig.output = "export";
 }
 
