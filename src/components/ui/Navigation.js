@@ -27,7 +27,7 @@ export default function Navigation() {
   const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   return (
-    <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
+    <nav className="sticky top-0 z-50 flex items-center justify-between bg-[#dbd2c4] p-2 shadow border-b-1">
       <div className="flex items-center">
         <img
           src="/TheHartfordIcon.svg"
