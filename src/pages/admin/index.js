@@ -24,7 +24,14 @@ function AdminPage() {
         if (!isProduction) {
           console.log("Admin Parameters:", data);
         }
-        // ...
+        const { id, ...rest } = data;
+        setParameters(rest);
+        const initialEditValues = Object.keys(rest).reduce(
+          (acc, key) => ({ ...acc, [key]: "" }),
+          {}
+        );
+        setEditValues(initialEditValues);
+        setIsLoading(false);
       })
       .catch((error) => {
         if (!isProduction) {
