@@ -7,6 +7,8 @@ import { calculateInsuranceRate } from "./RateCalculator";
 import VehicleImage from "../hooks/VehicleImage";
 import CircularDeterminate from "../mui/CircularDeterminate";
 
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
+
 export default function VehicleFetcher() {
   const [data, setData] = useState({
     recalls: [],
@@ -42,7 +44,9 @@ export default function VehicleFetcher() {
         setHasFetchedData(true);
       }
     } catch (error) {
-      console.error("Error fetching data from first API.", error);
+      if (!isProduction) {
+        console.error("Error fetching data from first API.", error);
+      }
     }
 
     try {
@@ -69,14 +73,18 @@ export default function VehicleFetcher() {
         });
       }
     } catch (error) {
-      console.error("Error fetching data from second API.", error);
+      if (!isProduction) {
+        console.error("Error fetching data from second API.", error);
+      }
     }
 
     setIsLoading(false);
   };
 
   const handleSelectCar = (index) => {
-    console.log("Car selected at index:", index);
+    if (!isProduction) {
+      console.log("Car selected at index:", index);
+    }
     setSelectedCarIndex(index);
   };
 

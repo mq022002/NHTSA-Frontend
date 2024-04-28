@@ -14,14 +14,24 @@ export const SessionProvider = ({ children }) => {
     const idToken = localStorage.getItem("idToken");
     const refreshToken = localStorage.getItem("refreshToken");
 
-    // MQ: Please keep these console.log statements for debugging purposes
-    // console.log("Access Token:", accessToken);
-    // console.log("ID Token:", idToken);
-    // console.log("Refresh Token:", refreshToken);
+    if (!isProduction) {
+      console.log("Access Token:", accessToken);
+      console.log("ID Token:", idToken);
+      console.log("Refresh Token:", refreshToken);
+    }
 
     if (accessToken && idToken && refreshToken) {
       const cognitoUser = localStorage.getItem("cognitoUser");
       const user = cognitoUser ? JSON.parse(cognitoUser) : null;
+
+      if (!isProduction) {
+        console.log("User:", user);
+        console.log(
+          "First Cognito Group:",
+          user && user["cognito:groups"] ? user["cognito:groups"][0] : null
+        );
+      }
+
       setSession({ user });
     } else {
       setSession(null);

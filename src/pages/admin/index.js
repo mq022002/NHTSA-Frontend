@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
+
 function AdminPage() {
   const [parameters, setParameters] = useState({
     baseRate: "",
@@ -19,18 +21,15 @@ function AdminPage() {
     fetch(process.env.NEXT_PUBLIC_FETCH_INSURANCE_CALCULATIONS)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        const { id, ...rest } = data;
-        setParameters(rest);
-        const initialEditValues = Object.keys(rest).reduce(
-          (acc, key) => ({ ...acc, [key]: "" }),
-          {}
-        );
-        setEditValues(initialEditValues);
-        setIsLoading(false);
+        if (!isProduction) {
+          console.log("Admin Parameters:", data);
+        }
+        // ...
       })
       .catch((error) => {
-        console.error("Error fetching parameters:", error);
+        if (!isProduction) {
+          console.error("Error fetching parameters:", error);
+        }
         setIsLoading(false);
       });
   }, []);
@@ -65,7 +64,9 @@ function AdminPage() {
         setEditValues({});
       })
       .catch((error) => {
-        console.error("Error updating parameters:", error);
+        if (!isProduction) {
+          console.error("Error updating parameters:", error);
+        }
       });
   };
 

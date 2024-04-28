@@ -25,7 +25,9 @@ function HomePage() {
         const data = await response.json();
         setReviews(data);
       } catch (error) {
-        console.error(error);
+        if (!isProduction) {
+          console.error(error);
+        }
       }
     };
 
