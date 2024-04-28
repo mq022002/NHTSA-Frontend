@@ -16,9 +16,10 @@ function AdminPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(process.env.FETCH_INSURANCE_CALCULATIONS)
+    fetch(process.env.NEXT_PUBLIC_FETCH_INSURANCE_CALCULATIONS)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const { id, ...rest } = data;
         setParameters(rest);
         const initialEditValues = Object.keys(rest).reduce(
@@ -50,7 +51,7 @@ function AdminPage() {
       return acc;
     }, {});
 
-    fetch(process.env.POST_ADMIN_CHANGES, {
+    fetch(process.env.NEXT_PUBLIC_POST_ADMIN_CHANGES, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
