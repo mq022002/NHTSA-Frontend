@@ -20,7 +20,8 @@ export const SessionProvider = ({ children }) => {
     // console.log("Refresh Token:", refreshToken);
 
     if (accessToken && idToken && refreshToken) {
-      const user = JSON.parse(localStorage.getItem("cognitoUser"));
+      const cognitoUser = localStorage.getItem("cognitoUser");
+      const user = cognitoUser ? JSON.parse(cognitoUser) : null;
       setSession({ user });
     } else {
       setSession(null);
