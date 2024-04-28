@@ -102,32 +102,34 @@ export default function VehicleFetcher() {
       data.ratings.length > selectedCarIndex
     ) {
       const selectedCar = data.ratings[selectedCarIndex];
-      if (selectedCar) {
+      let averageMSRP = 0;
+
+      if (selectedCar && selectedCar.MSRP) {
         const msrpValues = selectedCar.MSRP.replace(/[$,]/g, "")
           .split(" - ")
           .map(Number);
-        const averageMSRP =
+        averageMSRP =
           msrpValues.length === 2
             ? (msrpValues[0] + msrpValues[1]) / 2
             : msrpValues[0];
-
-        const insuranceRate = calculateInsuranceRate(
-          averageMSRP,
-          parseRating(selectedCar.OverallRating),
-          parseRating(selectedCar.OverallFrontCrashRating),
-          parseRating(selectedCar.OverallSideCrashRating),
-          parseRating(selectedCar.RolloverRating),
-          selectedCar.NHTSAElectronicStabilityControl === "Standard",
-          selectedCar.NHTSAForwardCollisionWarning === "Yes",
-          selectedCar.NHTSALaneDepartureWarning === "Yes",
-          data.recalls.length
-        );
-
-        setData((prevData) => ({
-          ...prevData,
-          insuranceRate: insuranceRate,
-        }));
       }
+
+      const insuranceRate = calculateInsuranceRate(
+        averageMSRP,
+        parseRating(selectedCar.OverallRating),
+        parseRating(selectedCar.OverallFrontCrashRating),
+        parseRating(selectedCar.OverallSideCrashRating),
+        parseRating(selectedCar.RolloverRating),
+        selectedCar.NHTSAElectronicStabilityControl === "Standard",
+        selectedCar.NHTSAForwardCollisionWarning === "Yes",
+        selectedCar.NHTSALaneDepartureWarning === "Yes",
+        data.recalls.length
+      );
+
+      setData((prevData) => ({
+        ...prevData,
+        insuranceRate: insuranceRate,
+      }));
     }
   }, [selectedCarIndex, data.ratings, data.recalls.length]);
 
