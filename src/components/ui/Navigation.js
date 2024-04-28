@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { SessionContext } from "../../context/SessionContext";
 
-const NavLink = ({ href, children, onClick }) => {
+const NavLink = ({ href, children, onClick, highlightActive = true }) => {
   const router = useRouter();
-  const isActive = router.pathname === href.replace(".html", "");
+  const isActive =
+    highlightActive && router.pathname === href.replace(".html", "");
 
   return (
     <Link
@@ -58,6 +59,7 @@ export default function Navigation() {
             <NavLink
               href={isProduction ? "/home.html" : "/home"}
               onClick={signOut}
+              highlightActive={false}
             >
               Logout
             </NavLink>
