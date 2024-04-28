@@ -1,102 +1,115 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function AdminPage() {
   const [parameters, setParameters] = useState({
-    baseRate: '',
-    msrpThreshold: '',
-    msrpFactor: '',
-    minSafetyRating: '',
-    safetyRatingMultiplier: '',
-    escBonus: '',
-    fcwBonus: '',
-    ldwPenalty: '',
-    recallPenalty: ''
+    baseRate: "",
+    msrpThreshold: "",
+    msrpFactor: "",
+    minSafetyRating: "",
+    safetyRatingMultiplier: "",
+    escBonus: "",
+    fcwBonus: "",
+    ldwPenalty: "",
+    recallPenalty: "",
   });
   const [editValues, setEditValues] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(process.env.FETCH_INSURANCE_CALCULATIONS)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const { id, ...rest } = data;
         setParameters(rest);
-        const initialEditValues = Object.keys(rest).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+        const initialEditValues = Object.keys(rest).reduce(
+          (acc, key) => ({ ...acc, [key]: "" }),
+          {}
+        );
         setEditValues(initialEditValues);
         setIsLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching parameters:', error);
+      .catch((error) => {
+        console.error("Error fetching parameters:", error);
         setIsLoading(false);
       });
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditValues(prev => ({
+    setEditValues((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const updatedValues = Object.keys(parameters).reduce((acc, key) => {
-      
-      acc[key] = editValues[key] !== '' ? editValues[key] : parameters[key];
+      acc[key] = editValues[key] !== "" ? editValues[key] : parameters[key];
       return acc;
     }, {});
 
-    fetch(process.env.POST_ADMIN_CHANGES , {
-      method: 'POST',
+    fetch(process.env.POST_ADMIN_CHANGES, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedValues)
+      body: JSON.stringify(updatedValues),
     })
-    .then(response => response.json())
-    .then(data => {
-      alert('Parameters updated successfully');
-      setParameters(updatedValues); 
-      setEditValues({}); 
-    })
-    .catch(error => {
-      console.error('Error updating parameters:', error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        alert("Parameters updated successfully");
+        setParameters(updatedValues);
+        setEditValues({});
+      })
+      .catch((error) => {
+        console.error("Error updating parameters:", error);
+      });
   };
 
-  if (isLoading) return <div className="container mx-auto text-center p-4"><p>Loading...</p></div>;
+  if (isLoading)
+    return (
+      <div className="container p-4 mx-auto text-center">
+        <p>Loading...</p>
+      </div>
+    );
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-center text-xl font-bold mb-4">Admin Insurance Parameters</h1>
-      <div className="flex justify-between items-center mb-2 font-bold text-black">
+    <div className="container p-4 mx-auto">
+      <h1 className="mb-4 text-xl font-bold text-center">
+        Admin Insurance Parameters
+      </h1>
+      <div className="flex items-center justify-between mb-2 font-bold text-black">
         <span className="w-1/3">Insurance Factor</span>
         <span className="w-1/3 text-center">Current Value</span>
         <span className="w-1/3 text-right">New Value</span>
       </div>
-      <hr className="border-b-2 border-gray-300 mb-4"/>
+      <hr className="mb-4 border-b-2 border-gray-300" />
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.entries(parameters).map(([key, currentVal]) => (
-          <div key={key} className="flex justify-between items-center space-x-4">
-            <label className="w-1/3 text-black font-bold">
-              {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+          <div
+            key={key}
+            className="flex items-center justify-between space-x-4"
+          >
+            <label className="w-1/3 font-bold text-black">
+              {key.charAt(0).toUpperCase() +
+                key.slice(1).replace(/([A-Z])/g, " $1")}
             </label>
             <span className="w-1/3 text-center text-black">{currentVal}</span>
             <input
               type="text"
               name={key}
               placeholder="Enter new value"
-              value={editValues[key] || ''}  
+              value={editValues[key] || ""}
               onChange={handleChange}
-              className="text-black border-gray-300 border-2 rounded-md p-2 w-1/3"
+              className="w-1/3 p-2 text-black border-2 border-gray-300 rounded-md"
             />
           </div>
         ))}
         <button
           type="submit"
-          className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full md:w-auto"
+          className="w-full px-4 py-2 mt-4 font-bold text-white bg-red-500 rounded hover:bg-red-700 md:w-auto"
         >
           Update Parameters
         </button>
