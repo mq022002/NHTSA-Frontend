@@ -37,7 +37,7 @@ export const SessionProvider = ({ children }) => {
       setSession(null);
     }
     setIsLoading(false);
-  }, []);
+  }, [isProduction]);
 
   const signIn = (accessToken, idToken, refreshToken, user) => {
     localStorage.setItem("accessToken", accessToken);

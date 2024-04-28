@@ -32,7 +32,7 @@ function HomePage() {
     };
 
     fetchReviews();
-  }, []);
+  }, [isProduction]);
 
   return (
     <div className="w-full">
