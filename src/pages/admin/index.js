@@ -16,6 +16,7 @@ function AdminPage() {
   });
   const [editValues, setEditValues] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [initialEditValues, setInitialEditValues] = useState({});
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_FETCH_INSURANCE_CALCULATIONS)
@@ -27,7 +28,7 @@ function AdminPage() {
         const { id, ...rest } = data;
         setParameters(rest);
         const initialEditValues = Object.keys(rest).reduce(
-          (acc, key) => ({ ...acc, [key]: "" }),
+          (acc, key) => ({ ...acc, [key]: rest[key] }),
           {}
         );
         setEditValues(initialEditValues);
@@ -67,8 +68,9 @@ function AdminPage() {
       .then((response) => response.json())
       .then((data) => {
         alert("Parameters updated successfully");
-        setParameters(updatedValues);
-        setEditValues({});
+        setParameters((prev) => ({ ...prev, ...updatedValues }));
+        setInitialEditValues(updatedValues);
+        setEditValues(updatedValues);
       })
       .catch((error) => {
         if (!isProduction) {
