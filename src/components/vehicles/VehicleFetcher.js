@@ -3,7 +3,7 @@ import axios from "axios";
 import VehicleForm from "./VehicleForm";
 import VehicleRatings from "./VehicleRatings";
 import VehicleRecalls from "./VehicleRecalls";
-import { calculateInsuranceRate } from "./RateCalculator";
+import { calculateInsuranceRate } from "../utilities/RateCalculator";
 import VehicleImage from "./VehicleImage";
 import CircularDeterminate from "../mui/CircularDeterminate";
 
