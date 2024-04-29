@@ -23,6 +23,11 @@ export default function VehicleFetcher() {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (year, make, model) => {
+    if (!year || !make || !model) {
+      setErrorMessage("Please provide a year, make, and model.");
+      return;
+    }
+
     let response;
     let combinedDataResponse;
 
