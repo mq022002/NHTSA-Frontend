@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { SessionContext } from "../../context/SessionContext";
 
 const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
 function AdminPage() {
+  const { session } = useContext(SessionContext);
   const [parameters, setParameters] = useState({
     baseRate: "",
     msrpThreshold: "",
@@ -17,6 +19,12 @@ function AdminPage() {
   const [editValues, setEditValues] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [initialEditValues, setInitialEditValues] = useState({});
+
+  useEffect(() => {
+    if (!isProduction && session) {
+      console.log("Logged in user:", session.user);
+    }
+  }, [session]);
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_FETCH_INSURANCE_CALCULATIONS)
