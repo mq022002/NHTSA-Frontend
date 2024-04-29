@@ -27,12 +27,12 @@ jobs:
           # AWS Cognito
           NEXT_PUBLIC_CLIENT_SECRET: ${{ secrets.COGNITO_CLIENT_SECRET }}
 
-      # - name: Start development server
-      #   run: npm run dev &
-      # - name: Run Cypress Test
-      #   run: npx cypress run --spec "cypress/e2e/tests.cy.js"
-      # - name: Stop development server
-      #   run: kill $(lsof -t -i:3000)
+      - name: Start development server
+        run: npm run dev &
+      - name: Run Cypress Test
+        run: npx cypress run --spec "cypress/e2e/tests.cy.js"
+      - name: Stop development server
+        run: kill $(lsof -t -i:3000)
       - name: Make the AWS config
         uses: aws-actions/configure-aws-credentials@v1
         with:
