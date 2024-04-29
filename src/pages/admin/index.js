@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { SessionContext } from "../../context/SessionContext";
+import { useRouter } from "next/router";
 
 const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
 function AdminPage() {
   const { session } = useContext(SessionContext);
+  const router = useRouter();
   const [parameters, setParameters] = useState({
     baseRate: "",
     msrpThreshold: "",
@@ -21,10 +23,29 @@ function AdminPage() {
   const [initialEditValues, setInitialEditValues] = useState({});
 
   useEffect(() => {
+    if (isLoading) return;
+
     if (!isProduction && session) {
       console.log("Logged in user:", session.user);
     }
-  }, [session]);
+
+    if (
+      !session ||
+      !session.user["cognito:groups"] ||
+      !session.user["cognito:groups"].includes("superusers")
+    ) {
+      if (!isProduction) {
+        console.log(
+          "User groups:",
+          session && session.user
+            ? session.user["cognito:groups"]
+            : "No session"
+        );
+      }
+
+      router.push("/home");
+    }
+  }, [session, isLoading, router]);
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_FETCH_INSURANCE_CALCULATIONS)
