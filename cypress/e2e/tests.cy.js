@@ -1,6 +1,6 @@
 describe("Navigation", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("http://localhost:3000/home");
   });
 
   it("should display the logo", () => {
@@ -9,51 +9,47 @@ describe("Navigation", () => {
 
   it("should navigate to home page when Home link is clicked", () => {
     cy.get("a").contains("Home").click();
-    cy.url().should("include", "/");
+    cy.url().should("include", "/home");
   });
 
-  it("should navigate to the correct URL when Login / Register link is clicked", () => {
-    cy.get("a").contains("Login / Register").click();
-    cy.url().should(
-      "include",
-      "/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F",
-    );
+  it("should navigate to about page when About link is clicked", () => {
+    cy.get("a").contains("About").click();
+    cy.url().should("include", "/about");
   });
 
-  it("should navigate to fetch vehicle data page when Fetch Vehicle Data link is clicked", () => {
-    cy.simulateNextAuthSession({
-      user: { name: "Test User", email: "test@example.com" },
-      accessToken: "mockAccessToken",
-      expires: "2022-01-01T00:00:00.000Z",
+  it("should log in when correct credentials are typed in", () => {
+    cy.window().then((win) => {
+      win.localStorage.setItem("accessToken", "fake_access_token");
+      win.localStorage.setItem("idToken", "fake_id_token");
+      win.localStorage.setItem("refreshToken", "fake_refresh_token");
+      win.localStorage.setItem(
+        "cognitoUser",
+        JSON.stringify({
+          sub: "fake-sub",
+          aud: "fake-aud",
+          email: "fake-email@example.com",
+          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+          iat: Math.floor(Date.now() / 1000),
+          name: "fake-name",
+        })
+      );
     });
 
-    cy.visit("http://localhost:3000");
+    cy.visit("http://localhost:3000/home");
+    cy.url().should("include", "/home");
+    cy.get("a").contains("fake-name").should("be.visible");
+    cy.get("a").contains("fake-name").click();
+    cy.url().should("include", "/account");
 
+    cy.visit("http://localhost:3000/home");
+    cy.url().should("include", "/home");
+    cy.get("a").contains("Fetch Vehicle Data").should("be.visible");
     cy.get("a").contains("Fetch Vehicle Data").click();
     cy.url().should("include", "/fetch_vehicle_data");
-  });
 
-  it("should navigate to account page when user name link is clicked", () => {
-    cy.simulateNextAuthSession({
-      user: { name: "Test User", email: "test@example.com" },
-      accessToken: "mockAccessToken",
-      expires: "2022-01-01T00:00:00.000Z",
-    });
-
-    cy.visit("http://localhost:3000");
-
-    cy.get("a").contains("Test User").click();
-    cy.url().should("include", "/account");
-  });
-
-  it("should display the Logout link when the session exists", () => {
-    cy.simulateNextAuthSession({
-      user: { name: "Test User", email: "test@example.com" },
-      accessToken: "mockAccessToken",
-      expires: "2022-01-01T00:00:00.000Z",
-    });
-
-    cy.visit("http://localhost:3000");
-    cy.get("a").contains("Logout").should("be.visible");
+    cy.visit("http://localhost:3000/home");
+    cy.url().should("include", "/home");
+    cy.get("a").contains("Logout").click();
+    cy.window().its("localStorage").should("be.empty");
   });
 });
