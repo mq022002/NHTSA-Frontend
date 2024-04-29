@@ -8,6 +8,7 @@ export function calculateInsuranceRate(
   fcw,
   ldw,
   recalls,
+  insuranceParameters
 ) {
   if (
     msrp === null ||
@@ -23,16 +24,22 @@ export function calculateInsuranceRate(
     return "Cannot calculate insurance rate due to missing data.";
   }
 
-  let baseRate = 500;
+  let baseRate = insuranceParameters.baseRate;
   let msrpFactor =
-    msrp > 30000 ? ((msrp - 30000) / 10000) * 0.015 * baseRate : 0;
+    msrp > insuranceParameters.msrpThreshold
+      ? ((msrp - insuranceParameters.msrpThreshold) / 10000) *
+        insuranceParameters.msrpFactor *
+        baseRate
+      : 0;
   let safetyRatingAdjustment =
     overallRating + frontCrashRating + sideCrashRating + rolloverRating;
-  let safetyRatingBonus = (safetyRatingAdjustment - 16) * -50;
-  let escBonus = esc === "Standard" ? -25 : 0;
-  let fcwBonus = fcw === "Optional" ? -20 : 0;
-  let ldwPenalty = ldw === "No" ? 15 : 0;
-  let recallPenalty = recalls * 50;
+  let safetyRatingBonus =
+    (safetyRatingAdjustment - insuranceParameters.minSafetyRating) *
+    -insuranceParameters.safetyRatingMultiplier;
+  let escBonus = esc === "Standard" ? insuranceParameters.escBonus : 0;
+  let fcwBonus = fcw === "Optional" ? insuranceParameters.fcwBonus : 0;
+  let ldwPenalty = ldw === "No" ? insuranceParameters.ldwPenalty : 0;
+  let recallPenalty = recalls * insuranceParameters.recallPenalty;
   let minimumRate = 0;
   let totalRate =
     baseRate +

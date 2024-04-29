@@ -6,6 +6,7 @@ import VehicleRecalls from "./VehicleRecalls";
 import { calculateInsuranceRate } from "../utilities/RateCalculator";
 import VehicleImage from "./VehicleImage";
 import CircularDeterminate from "../mui/CircularDeterminate";
+import useFetchInsuranceParameters from "../../hooks/useFetchInsuranceParameters";
 
 const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
@@ -21,6 +22,7 @@ export default function VehicleFetcher() {
   const [scrapedData, setScrapedData] = useState({ imageUrl: "", linkUrl: "" });
   const [selectedCarIndex, setSelectedCarIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { parameters: insuranceParameters } = useFetchInsuranceParameters();
 
   const fetchData = async (year, make, model) => {
     if (!year || !make || !model) {
@@ -128,7 +130,8 @@ export default function VehicleFetcher() {
         selectedCar.NHTSAElectronicStabilityControl === "Standard",
         selectedCar.NHTSAForwardCollisionWarning === "Yes",
         selectedCar.NHTSALaneDepartureWarning === "Yes",
-        data.recalls.length
+        data.recalls.length,
+        insuranceParameters
       );
 
       setData((prevData) => ({
@@ -136,7 +139,12 @@ export default function VehicleFetcher() {
         insuranceRate: insuranceRate,
       }));
     }
-  }, [selectedCarIndex, data.ratings, data.recalls.length]);
+  }, [
+    selectedCarIndex,
+    data.ratings,
+    data.recalls.length,
+    insuranceParameters,
+  ]);
 
   return (
     <div className="container p-5 mx-auto">
