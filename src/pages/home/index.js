@@ -25,15 +25,17 @@ function HomePage() {
         const data = await response.json();
         setReviews(data);
       } catch (error) {
-        console.error(error);
+        if (!isProduction) {
+          console.error(error);
+        }
       }
     };
 
     fetchReviews();
-  }, []);
+  }, [isProduction]);
 
   return (
-    <div className="w-full mt-16">
+    <div className="w-full">
       <div className="flex flex-col md:flex-row items-center justify-center h-[calc(100vh-100px)] p-0 m-0">
         <div className="mr-4 text-black">
           <p className="text-4xl font-bold underline">

@@ -51,10 +51,7 @@ function AboutPage() {
       <div className="h-8 bg-transparent"></div>
 
       {/* Individual Team Members Section */}
-      <div
-        className="py-8 bg-fixed bg-center bg-cover"
-        style={{ backgroundImage: "url('/')" }}
-      >
+      <div className="py-8 bg-fixed bg-center bg-cover">
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <TeamMemberCard

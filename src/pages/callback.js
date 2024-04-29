@@ -47,7 +47,9 @@ export default function Callback() {
         .then((response) => {
           if (!response.ok) {
             return response.json().then((data) => {
-              console.error("Error:", data);
+              if (!isProduction) {
+                console.error("Error:", data);
+              }
               throw new Error("Failed to exchange code for tokens");
             });
           }

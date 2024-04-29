@@ -34,7 +34,7 @@ class WebDriverPool:
 # Initialize a WebDriver pool
 driver_pool = WebDriverPool()
 
-def findCarMSRP_sync(make, model, driver):
+def find_car_msrp_sync(make, model, driver):
     try:
         url = f"https://www.edmunds.com/{make}/{model}/"
         driver.get(url)
@@ -61,7 +61,7 @@ def scrape_link_sync(make, model, driver):
 def get_car_data(make, model):
     try:
         driver = driver_pool.get_driver()
-        msrp_info = findCarMSRP_sync(make, model, driver)
+        msrp_info = find_car_msrp_sync(make, model, driver)
         link_info = scrape_link_sync(make, model, driver)
         combined_results = {
             "msrp_info": msrp_info,

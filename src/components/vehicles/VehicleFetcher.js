@@ -3,9 +3,12 @@ import axios from "axios";
 import VehicleForm from "./VehicleForm";
 import VehicleRatings from "./VehicleRatings";
 import VehicleRecalls from "./VehicleRecalls";
-import { calculateInsuranceRate } from "./RateCalculator";
-import VehicleImage from "../hooks/VehicleImage";
+import { calculateInsuranceRate } from "../utilities/RateCalculator";
+import VehicleImage from "./VehicleImage";
 import CircularDeterminate from "../mui/CircularDeterminate";
+import useFetchInsuranceParameters from "../../hooks/useFetchInsuranceParameters";
+
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
 export default function VehicleFetcher() {
   const [data, setData] = useState({
@@ -19,8 +22,14 @@ export default function VehicleFetcher() {
   const [scrapedData, setScrapedData] = useState({ imageUrl: "", linkUrl: "" });
   const [selectedCarIndex, setSelectedCarIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { parameters: insuranceParameters } = useFetchInsuranceParameters();
 
   const fetchData = async (year, make, model) => {
+    if (!year || !make || !model) {
+      setErrorMessage("Please provide a year, make, and model.");
+      return;
+    }
+
     let response;
     let combinedDataResponse;
 
@@ -42,7 +51,9 @@ export default function VehicleFetcher() {
         setHasFetchedData(true);
       }
     } catch (error) {
-      console.error("Error fetching data from first API.", error);
+      if (!isProduction) {
+        console.error("Error fetching data from first API.", error);
+      }
     }
 
     try {
@@ -69,14 +80,18 @@ export default function VehicleFetcher() {
         });
       }
     } catch (error) {
-      console.error("Error fetching data from second API.", error);
+      if (!isProduction) {
+        console.error("Error fetching data from second API.", error);
+      }
     }
 
     setIsLoading(false);
   };
 
   const handleSelectCar = (index) => {
-    console.log("Car selected at index:", index);
+    if (!isProduction) {
+      console.log("Car selected at index:", index);
+    }
     setSelectedCarIndex(index);
   };
 
@@ -94,34 +109,42 @@ export default function VehicleFetcher() {
       data.ratings.length > selectedCarIndex
     ) {
       const selectedCar = data.ratings[selectedCarIndex];
-      if (selectedCar) {
+      let averageMSRP = 0;
+
+      if (selectedCar && selectedCar.MSRP) {
         const msrpValues = selectedCar.MSRP.replace(/[$,]/g, "")
           .split(" - ")
           .map(Number);
-        const averageMSRP =
+        averageMSRP =
           msrpValues.length === 2
             ? (msrpValues[0] + msrpValues[1]) / 2
             : msrpValues[0];
-
-        const insuranceRate = calculateInsuranceRate(
-          averageMSRP,
-          parseRating(selectedCar.OverallRating),
-          parseRating(selectedCar.OverallFrontCrashRating),
-          parseRating(selectedCar.OverallSideCrashRating),
-          parseRating(selectedCar.RolloverRating),
-          selectedCar.NHTSAElectronicStabilityControl === "Standard",
-          selectedCar.NHTSAForwardCollisionWarning === "Yes",
-          selectedCar.NHTSALaneDepartureWarning === "Yes",
-          data.recalls.length
-        );
-
-        setData((prevData) => ({
-          ...prevData,
-          insuranceRate: insuranceRate,
-        }));
       }
+
+      const insuranceRate = calculateInsuranceRate(
+        averageMSRP,
+        parseRating(selectedCar.OverallRating),
+        parseRating(selectedCar.OverallFrontCrashRating),
+        parseRating(selectedCar.OverallSideCrashRating),
+        parseRating(selectedCar.RolloverRating),
+        selectedCar.NHTSAElectronicStabilityControl === "Standard",
+        selectedCar.NHTSAForwardCollisionWarning === "Yes",
+        selectedCar.NHTSALaneDepartureWarning === "Yes",
+        data.recalls.length,
+        insuranceParameters
+      );
+
+      setData((prevData) => ({
+        ...prevData,
+        insuranceRate: insuranceRate,
+      }));
     }
-  }, [selectedCarIndex, data.ratings, data.recalls.length]);
+  }, [
+    selectedCarIndex,
+    data.ratings,
+    data.recalls.length,
+    insuranceParameters,
+  ]);
 
   return (
     <div className="container p-5 mx-auto">

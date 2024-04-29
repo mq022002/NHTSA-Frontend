@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { SessionContext } from "../../context/SessionContext";
 
-const NavLink = ({ href, children, onClick }) => {
+const NavLink = ({ href, children, onClick, highlightActive = true }) => {
   const router = useRouter();
-  const isActive = router.pathname === href.replace(".html", "");
+  const isActive =
+    highlightActive && router.pathname === href.replace(".html", "");
 
   return (
     <Link
@@ -27,7 +28,7 @@ export default function Navigation() {
   const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   return (
-    <nav className="flex items-center justify-between bg-[#dbd2c4] p-2">
+    <nav className="sticky top-0 z-50 flex items-center justify-between bg-[#dbd2c4] p-2 shadow border-b-1">
       <div className="flex items-center">
         <img
           src="/TheHartfordIcon.svg"
@@ -58,6 +59,7 @@ export default function Navigation() {
             <NavLink
               href={isProduction ? "/home.html" : "/home"}
               onClick={signOut}
+              highlightActive={false}
             >
               Logout
             </NavLink>
