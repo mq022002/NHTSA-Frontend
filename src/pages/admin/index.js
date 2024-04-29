@@ -1,26 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { SessionContext } from "../../context/SessionContext";
 import { useRouter } from "next/router";
+import useFetchInsuranceParameters from "../../hooks/useFetchInsuranceParameters";
 
 const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
 function AdminPage() {
   const { session } = useContext(SessionContext);
   const router = useRouter();
-  const [parameters, setParameters] = useState({
-    baseRate: "",
-    msrpThreshold: "",
-    msrpFactor: "",
-    minSafetyRating: "",
-    safetyRatingMultiplier: "",
-    escBonus: "",
-    fcwBonus: "",
-    ldwPenalty: "",
-    recallPenalty: "",
-  });
+  const { parameters, isLoading, error, setParameters } =
+    useFetchInsuranceParameters();
   const [editValues, setEditValues] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [initialEditValues, setInitialEditValues] = useState({});
 
   useEffect(() => {
     if (isLoading) return;
@@ -48,28 +38,10 @@ function AdminPage() {
   }, [session, isLoading, router]);
 
   useEffect(() => {
-    fetch(process.env.NEXT_PUBLIC_FETCH_INSURANCE_CALCULATIONS)
-      .then((response) => response.json())
-      .then((data) => {
-        if (!isProduction) {
-          console.log("Admin Parameters:", data);
-        }
-        const { id, ...rest } = data;
-        setParameters(rest);
-        const initialEditValues = Object.keys(rest).reduce(
-          (acc, key) => ({ ...acc, [key]: rest[key] }),
-          {}
-        );
-        setEditValues(initialEditValues);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        if (!isProduction) {
-          console.error("Error fetching parameters:", error);
-        }
-        setIsLoading(false);
-      });
-  }, []);
+    if (parameters) {
+      setEditValues(parameters);
+    }
+  }, [parameters]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -98,7 +70,6 @@ function AdminPage() {
       .then((data) => {
         alert("Parameters updated successfully");
         setParameters((prev) => ({ ...prev, ...updatedValues }));
-        setInitialEditValues(updatedValues);
         setEditValues(updatedValues);
       })
       .catch((error) => {
