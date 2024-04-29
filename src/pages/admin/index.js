@@ -33,7 +33,7 @@ function AdminPage() {
         );
       }
 
-      router.push("/home");
+      router.push(isProduction ? "/home.html" : "/home");
     }
   }, [session, isLoading, router]);
 
