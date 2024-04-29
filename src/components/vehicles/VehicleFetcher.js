@@ -4,7 +4,7 @@ import VehicleForm from "./VehicleForm";
 import VehicleRatings from "./VehicleRatings";
 import VehicleRecalls from "./VehicleRecalls";
 import { calculateInsuranceRate } from "./RateCalculator";
-import VehicleImage from "../hooks/VehicleImage";
+import VehicleImage from "./VehicleImage";
 import CircularDeterminate from "../mui/CircularDeterminate";
 
 const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
