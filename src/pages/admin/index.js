@@ -59,12 +59,22 @@ function AdminPage() {
       return acc;
     }, {});
 
+    const updatedValuesAsString = Object.fromEntries(
+      Object.entries(updatedValues).map(([key, value]) => [key, String(value)])
+    );
+
+    const json = JSON.stringify(updatedValuesAsString);
+
+    if (!isProduction) {
+      console.log(json);
+    }
+
     fetch(process.env.NEXT_PUBLIC_POST_ADMIN_CHANGES, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedValues),
+      body: json,
     })
       .then((response) => response.json())
       .then((data) => {
