@@ -23,15 +23,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-Cypress.Commands.add("simulateNextAuthSession", (sessionData) => {
-  cy.intercept("GET", "/api/auth/session", { body: sessionData }).as(
-    "getSession",
-  );
-});
-
-Cypress.Commands.add("clearNextAuthSession", () => {
-  cy.intercept("GET", "/api/auth/session", { body: { user: null } }).as(
-    "getSession",
-  );
-});
