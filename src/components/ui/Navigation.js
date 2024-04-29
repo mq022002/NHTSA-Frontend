@@ -26,6 +26,11 @@ const NavLink = ({ href, children, onClick, highlightActive = true }) => {
 export default function Navigation() {
   const { session, signOut } = React.useContext(SessionContext);
   const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
+  const userIsSuperuser =
+    session &&
+    session.user &&
+    session.user["cognito:groups"] &&
+    session.user["cognito:groups"].includes("superusers");
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between bg-[#dbd2c4] p-2 shadow border-b-1">
@@ -56,6 +61,14 @@ export default function Navigation() {
             >
               {session.user.name}
             </NavLink>
+            {userIsSuperuser && (
+              <NavLink
+                href={isProduction ? "/admin.html" : "/admin"}
+                className="pr-2 text-black text-bold"
+              >
+                Admin
+              </NavLink>
+            )}
             <NavLink
               href={isProduction ? "/home.html" : "/home"}
               onClick={signOut}
