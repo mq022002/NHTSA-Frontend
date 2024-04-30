@@ -28,6 +28,7 @@ describe("Vehicle Insurance Rates Flow", () => {
   it("should change the value of the year select field to 2017, click the button, and verify the text is visible", () => {
     cy.visit("http://localhost:3000/vehicle_insurance_rates");
     cy.wait(500);
+    cy.get('[data-testid="model-select"]').should("be.disabled");
     cy.get('[data-testid="year-select"]')
       .should("not.be.disabled")
       .select("2017");
