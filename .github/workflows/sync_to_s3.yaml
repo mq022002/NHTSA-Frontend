@@ -16,7 +16,7 @@ jobs:
       - name: Start development server
         run: npm run dev &
       - name: Run Cypress Tests
-        run: npx cypress run --spec "cypress/e2e/Navigation.cy.js" --spec "cypress/e2e/VehicleInsuranceRates.cy.js" --spec "cypress/e2e/Admin.cy.js"
+        run: npx cypress run --spec "cypress/e2e/*.cy.js"
       - name: Stop development server
         run: kill $(lsof -t -i:3000)
       - name: Produce out/ directory
