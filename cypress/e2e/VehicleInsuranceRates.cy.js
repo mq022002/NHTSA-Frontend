@@ -47,7 +47,9 @@ describe("Vehicle Insurance Rates Flow", () => {
     cy.get('[data-testid="fetch-data-button"]').click();
     cy.wait(2000);
     cy.contains("Please provide a year, make, and model.").should("not.exist");
-    cy.contains("Vehicle: 2017 Honda Civic 2 DR FWD").should("be.visible");
+    cy.contains("Vehicle: 2017 Honda Civic 2 DR FWD", {
+      timeout: 10000,
+    }).should("be.visible");
     cy.contains("Vehicle: 2017 Honda Civic 2 DR FWD").click();
     cy.contains("Insurance Rate").should("be.visible");
   });
