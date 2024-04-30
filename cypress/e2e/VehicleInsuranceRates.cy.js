@@ -30,11 +30,7 @@ describe("Vehicle Insurance Rates Flow", () => {
     cy.wait(500);
     cy.get('[data-testid="year-select"]')
       .should("not.be.disabled")
-      .then(($select) => {
-        const $element = Cypress.$($select);
-        $element.val("2017");
-        cy.wrap($select).trigger("change");
-      });
+      .select("2017");
     cy.get('[data-testid="fetch-data-button"]').click();
     cy.contains("Please provide a year, make, and model.").should("be.visible");
   });
