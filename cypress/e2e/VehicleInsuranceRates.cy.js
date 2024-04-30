@@ -25,7 +25,7 @@ describe("Vehicle Insurance Rates Flow", () => {
     cy.url().should("include", "/vehicle_insurance_rates");
   });
 
-  it("should change the value of the year select field to 2017, click the button, and verify the text is visible", () => {
+  it("should select a vehicle, fetch data, and display vehicle details and insurance rate", () => {
     cy.visit("http://localhost:3000/vehicle_insurance_rates");
     cy.wait(2000);
     cy.get('[data-testid="make-select"]').should("be.disabled");
@@ -45,6 +45,7 @@ describe("Vehicle Insurance Rates Flow", () => {
       .should("not.be.disabled")
       .select("Civic");
     cy.get('[data-testid="fetch-data-button"]').click();
+    cy.wait(2000);
     cy.contains("Please provide a year, make, and model.").should("not.exist");
     cy.contains("Vehicle: 2017 Honda Civic 2 DR FWD").should("be.visible");
     cy.contains("Vehicle: 2017 Honda Civic 2 DR FWD").click();
