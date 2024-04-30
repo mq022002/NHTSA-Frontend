@@ -1,4 +1,4 @@
-describe("Navigation", () => {
+describe("Navigation and Authentication Flow", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/home");
   });
@@ -15,6 +15,18 @@ describe("Navigation", () => {
   it("should navigate to about page when About link is clicked", () => {
     cy.get("a").contains("About").click();
     cy.url().should("include", "/about");
+  });
+
+  it("should not display Fetch Vehicle Data link when user is not logged in", () => {
+    cy.get("a").contains("Fetch Vehicle Data").should("not.exist");
+  });
+
+  it("should not display Account link when user is not logged in", () => {
+    cy.get("a").contains("Account").should("not.exist");
+  });
+
+  it("should not display Admin link when user is not a superuser", () => {
+    cy.get("a").contains("Admin").should("not.exist");
   });
 
   it("should log in when correct credentials are typed in", () => {
@@ -46,6 +58,10 @@ describe("Navigation", () => {
     cy.get("a").contains("Vehicle Insurance Rates").should("be.visible");
     cy.get("a").contains("Vehicle Insurance Rates").click();
     cy.url().should("include", "/vehicle_insurance_rates");
+
+    cy.visit("http://localhost:3000/home");
+    cy.url().should("include", "/home");
+    cy.get("a").contains("Admin").should("not.exist");
 
     cy.visit("http://localhost:3000/home");
     cy.url().should("include", "/home");
