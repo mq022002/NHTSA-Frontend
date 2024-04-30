@@ -25,6 +25,7 @@ export default function VehicleForm({ fetchData }) {
       ))}
     </select>
   );
+
   const handleMakeChange = (event) => {
     const selectedMake = event.target.value;
     setMake(selectedMake);
@@ -44,6 +45,7 @@ export default function VehicleForm({ fetchData }) {
         options={MAKES}
         value={make}
         onChange={handleMakeChange}
+        disabled={!year}
         data-testid="make-select"
       />
       <SelectInput
