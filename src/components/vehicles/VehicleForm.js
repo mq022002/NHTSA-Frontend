@@ -7,7 +7,14 @@ export default function VehicleForm({ fetchData }) {
   const [model, setModel] = useState("");
   const [models, setModels] = useState([]);
 
-  const SelectInput = ({ options, value, onChange, disabled, ...props }) => (
+  const SelectInput = ({
+    options,
+    value,
+    onChange,
+    disabled,
+    placeholder,
+    ...props
+  }) => (
     <select
       className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
       value={value}
@@ -16,7 +23,7 @@ export default function VehicleForm({ fetchData }) {
       {...props}
     >
       <option value="" disabled>
-        Select
+        {placeholder}
       </option>
       {options.map((option) => (
         <option key={option} value={option}>
@@ -39,6 +46,7 @@ export default function VehicleForm({ fetchData }) {
         options={YEARS}
         value={year}
         onChange={(e) => setYear(e.target.value)}
+        placeholder="Select Year"
         data-testid="year-select"
       />
       <SelectInput
@@ -46,6 +54,7 @@ export default function VehicleForm({ fetchData }) {
         value={make}
         onChange={handleMakeChange}
         disabled={!year}
+        placeholder="Select Make"
         data-testid="make-select"
       />
       <SelectInput
@@ -53,6 +62,7 @@ export default function VehicleForm({ fetchData }) {
         value={model}
         onChange={(e) => setModel(e.target.value)}
         disabled={!models.length}
+        placeholder="Select Model"
         data-testid="model-select"
       />
       <button
