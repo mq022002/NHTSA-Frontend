@@ -44,10 +44,12 @@ export default function Navigation() {
         {session && (
           <NavLink
             href={
-              isProduction ? "/fetch_vehicle_data.html" : "/fetch_vehicle_data"
+              isProduction
+                ? "/vehicle_insurance_rates.html"
+                : "/vehicle_insurance_rates"
             }
           >
-            Fetch Vehicle Data
+            Vehicle Insurance Rates
           </NavLink>
         )}
         <NavLink href={isProduction ? "/about.html" : "/about"}>About</NavLink>

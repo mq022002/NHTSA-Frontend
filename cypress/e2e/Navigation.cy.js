@@ -45,7 +45,7 @@ describe("Navigation", () => {
     cy.url().should("include", "/home");
     cy.get("a").contains("Fetch Vehicle Data").should("be.visible");
     cy.get("a").contains("Fetch Vehicle Data").click();
-    cy.url().should("include", "/fetch_vehicle_data");
+    cy.url().should("include", "/vehicle_insurance_rates");
 
     cy.visit("http://localhost:3000/home");
     cy.url().should("include", "/home");
