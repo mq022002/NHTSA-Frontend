@@ -1,14 +1,15 @@
-import { useSession } from "next-auth/react";
+import { useContext } from "react";
+import { SessionContext } from "../../context/SessionContext";
 import VehicleFetcher from "../../components/vehicles/VehicleFetcher";
 
 function FetchVehicleDataPage() {
-  const { data: session, status } = useSession();
+  const { session, signIn, isLoading } = useContext(SessionContext);
 
-  if (status === "loading") return null;
+  if (isLoading) return null;
 
   if (!session) {
     if (typeof window !== "undefined") {
-      window.location.href = "/api/auth/signin";
+      signIn();
     }
     return null;
   }

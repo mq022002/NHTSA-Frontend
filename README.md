@@ -10,14 +10,15 @@ git clone https://github.com/MAHA-Software-Engineering/NHTSA-Frontend.git
 3. Create new file named ".env.local".
 
 ```
-# AWS ENDPOINTS
-# AWS ENDPOINTS
-FETCH_DATA_ENDPOINT='uh oh, stinky 🦧'
+NEXT_PUBLIC_ENVIRONMENT=''
+
+# API GATEWAY ENDPOINTS
+NEXT_PUBLIC_FETCH_DATA_ENDPOINT=''
+NEXT_PUBLIC_FETCH_REVIEWS=''
+NEXT_PUBLIC_SUBMIT_REVIEW=''
 
 # AWS COGNITO
-COGNITO_CLIENT_ID='uh oh, stinky 🦧'
-COGNITO_CLIENT_SECRET='uh oh, stinky 🦧'
-COGNITO_ISSUER='uh oh, stinky 🦧'
+COGNITO_CLIENT_SECRET=
 ```
 
 4. Install dependencies from Node.js.

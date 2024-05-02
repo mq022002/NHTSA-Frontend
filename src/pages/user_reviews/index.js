@@ -1,9 +1,11 @@
 import UserReviews from "../../components/UserReviews";
-import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import React, { useEffect, useState, useContext } from "react";
+import { SessionContext } from "../../context/SessionContext";
+
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
 function UserReviewsPage() {
-  const { data: session } = useSession();
+  const { session } = useContext(SessionContext);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
     stars: 0,
@@ -19,7 +21,9 @@ function UserReviewsPage() {
         const data = await response.json();
         setReviews(data);
       } catch (error) {
-        console.error(error);
+        if (!isProduction) {
+          console.error(error);
+        }
       }
     };
 
@@ -57,7 +61,9 @@ function UserReviewsPage() {
       e.target.reset();
       setReviews([...reviews, reviewData]);
     } catch (error) {
-      console.error("Failed to submit review:", error);
+      if (!isProduction) {
+        console.error("Failed to submit review:", error);
+      }
       alert("Failed to submit review. Please try again.");
     }
     setNewReview({ stars: 0, reviewContent: "" });

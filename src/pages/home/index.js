@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -15,6 +15,7 @@ const renderStars = (rating) => {
 
 function HomePage() {
   const [reviews, setReviews] = useState([]);
+  const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -24,15 +25,17 @@ function HomePage() {
         const data = await response.json();
         setReviews(data);
       } catch (error) {
-        console.error(error);
+        if (!isProduction) {
+          console.error(error);
+        }
       }
     };
 
     fetchReviews();
-  }, []);
+  }, [isProduction]);
 
   return (
-    <div className="w-full mt-16">
+    <div className="w-full">
       <div className="flex flex-col md:flex-row items-center justify-center h-[calc(100vh-100px)] p-0 m-0">
         <div className="mr-4 text-black">
           <p className="text-4xl font-bold underline">
@@ -49,7 +52,10 @@ function HomePage() {
             </p>
           </div>
           <div className="mt-2">
-            <Link href="/user_reviews" legacyBehavior>
+            <Link
+              href={isProduction ? "/user_reviews.html" : "/user_reviews"}
+              legacyBehavior
+            >
               <a className="text-sm px-4 py-2 text-white transition duration-150 ease-in-out bg-[#832C31] rounded hover:bg-[#832C31]">
                 Leave us a review here!
               </a>
@@ -57,12 +63,10 @@ function HomePage() {
           </div>
         </div>
         <div className="w-full h-auto md:w-1/2">
-          <Image
+          <img
             src="/Navigator.svg"
             alt="car driving to checkpoint"
-            layout="responsive"
-            width={500}
-            height={300}
+            className="object-cover object-center w-full h-full"
           />
         </div>
       </div>
